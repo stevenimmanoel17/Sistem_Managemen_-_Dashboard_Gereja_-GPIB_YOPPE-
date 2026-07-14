@@ -1,0 +1,1123 @@
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Poppins', sans-serif; 
+}
+
+body { 
+    display: flex; 
+    background-color: #F8F9FA; 
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Loading */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.loader-logo {
+    width: 80px;
+    margin-bottom: 20px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.progress-container {
+    width: 200px;
+    height: 4px;
+    background: #f1f3f5;
+    border-radius: 10px;
+    margin: 0 auto 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background: #2392ED; /* Warna biru tema Anda */
+    animation: loading 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+@keyframes loading {
+    0% { width: 0; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+/* Class untuk menghilangkan loader */
+.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background-color: #000000;
+    color: white;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+/* Brand Section */
+.brand {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo {
+    width: 80px; 
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.brand h1 {
+    font-size: 18px;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.2;
+}
+
+/* Nav Menu */
+.nav-link {
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    background-color: #1a1a1a;
+}
+
+.nav-link.active {
+    background-color: #2392ED;
+}
+
+.nav-menu {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.nav-menu::-webkit-scrollbar {
+    display: none;
+}
+
+/* Ukuran Ikon Menu*/
+.menu-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    margin-right: 12px;
+}
+
+/* Footer & Logout */
+.sidebar-footer {
+    margin-top: auto;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 20px;
+    margin: 15px 0;
+}
+
+.logout-link {
+    display: flex;
+    align-items: center;
+    color: #ff0000; /* Warna merah sesuai gambar */
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 15px;
+}
+
+/* Layout Utama */
+.main-content {
+    margin-left: 260px; /* Wajib sama dengan lebar sidebar */
+    padding: 0;
+    width: calc(100% - 260px);
+}
+
+/* Content Header */
+.content-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 30px; 
+}
+
+.content-header h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #000;
+}
+
+.header-text p {
+    color: #888;
+    font-size: 15px;
+    font-weight: 400;
+    margin-top: 4px;
+}
+
+.btn-add { 
+    background-color: #2392ED;
+    color: white !important;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s; 
+}
+
+.btn-add:hover{
+    background-color: #2392ED;
+}
+
+/* Search Box */
+.search-section { 
+    background: white; 
+    padding: 20px; 
+    border-radius: 12px; 
+    margin-bottom: 25px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+}
+
+.search-box { 
+    width: 100%;
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    background: #fff; 
+    padding: 10px 15px; 
+    border-radius: 8px;
+    border: 1px solid  #e0e0e0; 
+}
+
+.search-icon { 
+    width: 25px; 
+    height: 25px; 
+    object-fit: contain;
+}
+
+.search-box input { 
+    border: none; 
+    background: transparent; 
+    outline: none; 
+    width: 100%; 
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* Table Style */
+.table-container { 
+    background: white; 
+    border-radius: 15px; 
+    padding: 20px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; 
+}
+
+.data-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    text-align: left; 
+}
+
+.data-table th { 
+    padding: 15px; color: #888; 
+    font-size: 16px; 
+    border-bottom: 1px solid #eee; 
+}
+
+.data-table td { 
+    padding: 15px; 
+    font-size: 14px; 
+    color: #333; 
+    border-bottom: 1px solid #f8f9fa; }
+
+/* Container utama baris kosong */
+.empty-state-container {
+    padding: 60px 0 !important; 
+    text-align: center;
+    border: none !important;
+}
+
+/* Styling konten pesan kosong */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.empty-state p {
+    font-size: 16px;
+    font-weight: 600;
+    color: #555;
+    margin: 0px;
+}
+
+.empty-state span {
+    font-size: 13px;
+    color: #888;
+    font-weight: 400;
+}
+
+/* Modal & Form Grid (Sesuai Gambar) */
+.modal { 
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.5); 
+    display: none; 
+    justify-content: center; 
+    align-items: flex-start;
+    padding: 40px 0;
+    overflow-y: auto; 
+    z-index: 1000; 
+}
+
+.modal-content { 
+background: white; 
+    width: 700px; 
+    padding: 30px; 
+    border-radius: 15px; 
+    position: relative;
+    margin-bottom: 40px;
+    overflow: visible !important;
+}
+
+.modal-content h3 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2392ED;
+}
+
+/* Pastikan dropdown muncul di atas elemen modal lainnya */
+.modal-content .custom-select-wrapper {
+    position: relative;
+    z-index: 99; /* Lebih tinggi dari padding modal */
+}
+
+.modal-content .custom-options {
+    position: absolute;
+    top: 52px;
+    left: 0;
+    width: 100%;
+    max-height: 180px;
+    overflow-y: auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    z-index: 1000;
+}
+
+/* Hover abu-abu bersih */
+.custom-options li:hover {
+    background-color: #F1F3F5;
+    color: #000;
+}
+
+.modal-header { 
+    display: flex; 
+    justify-content: space-between; 
+    margin-bottom: 20px; }
+
+.form-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;
+    position: relative;
+}
+
+.form-group { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+}
+
+/* Container khusus untuk 3 kolom sejajar */
+.form-row-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Membagi menjadi 3 bagian sama besar */
+    gap: 20px;
+    grid-column: span 2; /* Mengambil seluruh lebar grid utama (2 kolom) */
+}
+
+/* Pastikan input di dalamnya memenuhi ruang */
+.form-row-3 .form-group {
+    width: 100%;
+}
+
+.form-group label { 
+    font-size: 14px; 
+    font-weight: 600; 
+    color: #555; 
+}
+
+.form-group input,  
+.form-group textarea { 
+    padding: 10px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    background: #f9f9f9; 
+    font-size: 14px; /* Tambahkan ukuran font agar seragam */
+    outline: none;
+}
+
+/* Tambahkan ini khusus untuk select (Dropdown) */
+.form-group select {
+    width: 100%;
+    height: 48px; /* Tinggi standar agar nyaman diklik */
+    padding: 0 15px;
+    border: 1px solid #E0E0E0; 
+    border-radius: 10px; 
+    background-color: #FFFFFF;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    cursor: pointer;
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Efek saat kursor di atas dropdown */
+.form-group select:hover {
+    border-color: #2392ED;
+}
+
+/* Efek saat dropdown diklik (Fokus) */
+.form-group select:focus {
+    border-color: #2392ED;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(35, 146, 237, 0.1);
+    outline: none;
+}
+
+/* Menyamakan gaya input text & date agar seragam */
+.form-group input {
+    height: 48px;
+    padding: 0 15px;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    background-color: #F8F9FA; /* Sedikit abu agar kontras */
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #2392ED;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(35, 146, 237, 0.1);
+}
+
+.full-width {  
+    grid-column: span 2; 
+}
+
+.btn-save { 
+    width: auto; 
+    min-width: 150px;
+    background: #2392ED;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0; 
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-edit, .btn-delete {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-edit {
+    background-color: #2392ED;
+}
+
+.btn-edit:hover {
+    background-color: #5cb0ec;
+}
+
+.btn-delete {
+    background-color: #FF5252;
+}
+
+.btn-delete:hover {
+    background-color: #f17286;
+}
+
+.btn-edit img, .btn-delete img {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-detail {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #2ecc71; 
+}
+
+.btn-detail:hover {
+    background-color: #27ae60;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.detail-group label {
+    font-size: 12px;
+    color: #888;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.detail-group p {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+    margin-top: 5px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.detail-group.full-width {
+    grid-column: span 3;
+}
+
+.detail-row-2-full {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    grid-column: span 3;
+}
+
+/* Tambahkan di bagian Modal */
+.close {
+    font-size: 28px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: 0.3s;
+    line-height: 1;
+}
+
+.close:hover {
+    color: #ff0000;
+}
+
+/* Tambahkan di bagian Table Style */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    background: #e3f2fd;
+    color: #2392ED;
+}
+
+/* Atur posisi tombol di footer modal */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end; 
+    gap: 12px; 
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+/* Tombol Batal  */
+.btn-cancel {
+    background: #FF5252;
+    color: #fff;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-cancel:hover {
+    background: #f17286;
+}
+
+.data-table tr {
+    transition: opacity 0.2s ease;
+}
+
+/* Style tambahan untuk search box agar lebih interaktif */
+.search-box:focus-within {
+    border: 1px solid #2392ED;
+    box-shadow: 0 0 8px rgba(35, 146, 237, 0.2);
+}
+
+/* Container footer tabel untuk pagination */
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 0 10px;
+}
+
+/* Styling dropdown jumlah data */
+.show-entries {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.show-entries select {
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+/* Styling navigasi halaman (Pagination) */
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.pagination-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-page {
+    padding: 5px 12px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-page.active {
+    background: #2392ED;
+    color: white;
+    border-color: #2392ED;
+}
+
+.btn-page:hover:not(.active) {
+    background: #f1f3f5;
+}
+
+/* Badge Warna Status */
+.status-aktif { 
+    background: #e3f2fd; 
+    color: #2392ED; }
+
+.status-non { 
+    background: #fee2e2; 
+    color: #ef4444; }
+
+/* Badge Warna Abu-abu untuk data kosong (None) */
+.status-none { 
+    background: #E9ECEF; 
+    color: #6C757D; 
+}
+
+/* Styling Search Grid */
+.search-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 0.5fr; /* Mengatur lebar kolom */
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.search-input-group, .filter-group, .refresh-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.search-input-group label, .filter-group label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #888;
+}
+
+/* Tombol Refresh*/
+.btn-refresh {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    background: #2392ED; /* Biru tema Anda */
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(35, 146, 237, 0.2);
+}
+
+.btn-refresh:hover {
+    background: #1A7ACD;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 15px rgba(35, 146, 237, 0.4);
+}
+
+.btn-refresh:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Spinner untuk di dalam tabel */
+.loader-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #2392ED;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.custom-select {
+    height: 48px;
+    padding: 0 20px;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px; /* Radius melengkung */
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #888;
+
+}
+
+/* Container utama dropdown custom */
+.custom-select-wrapper {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+}
+
+.custom-select-wrapper:has(.custom-options.show) {
+    z-index: 9999 !important;
+}
+
+/* List pilihan yang melayang */
+.custom-options {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25); /* Efek melayang/shadow */
+    list-style: none;
+    padding: 8px 0;
+    display: none; /* Sembunyi dulu */
+    z-index: 9999 !important;
+    border: 1px solid #eee;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.custom-options li {
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+/* Hover abu-abu yang kamu minta */
+.custom-options li:hover:not(.opt-group) {
+    background-color: #F1F3F5; 
+}
+
+/* Gaya untuk judul grup (Status/Pelkat) */
+.opt-group {
+    font-weight: 700;
+    color: #888;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding-bottom: 5px !important;
+}
+
+.custom-options.show { 
+    display: block; 
+}
+
+.custom-arrow {
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #333;
+    transition: transform 0.3s ease;
+}
+
+.custom-options.show + .custom-select .custom-arrow {
+    transform: rotate(180deg);
+}
+
+.custom-select:has(+ .custom-options.show) .custom-arrow {
+    transform: rotate(180deg);
+}
+
+.main-footer {
+    width: 100%;
+    padding: 15px 0; 
+    margin-top: 40px; 
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+    color: #6c757d;
+    font-size: 14px;
+    font-weight: 500;
+    clear: both; 
+}
+
+.main-footer p {
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+.swal2-timer-progress-bar {
+    background: #2ecc71 !important;
+}
+
+/* top-nav */
+.top-nav {
+    width: 100%;
+    height: 70px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+    padding: 0 40px;
+    position: sticky; 
+    top: 0; 
+    z-index: 999;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-right: 10px;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Avatar - User Info*/
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 5px 10px;
+    border-radius: 50px;
+    transition: 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.user-info:hover {
+    background-color: #f8f9fa; /* Efek hover halus */
+}
+
+.user-text {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.user-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.2;
+}
+
+.user-role {
+    font-size: 11px;
+    color: #888;
+    font-weight: 500;
+}
+
+.user-avatar-wrapper {
+    position: relative;
+}
+
+.avatar-circle {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #2392ED 0%, #1A7ACD 100%); /* Gradien biru tema */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 18px;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 10px rgba(35, 146, 237, 0.2); /* Shadow modern */
+}
+
+/* Titik Hijau Status Online */
+.user-avatar-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background-color: #2ecc71; /* Warna hijau online */
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+
+/* Wadah Utama Kotak Informasi Melayang */
+.user-profile-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 15px);
+    right: 0;
+    width: 420px;
+    height: 380px;
+    background: #FFFFFF;
+    border-radius: 35px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+    z-index: 10000;
+    overflow: hidden;
+    border: 1px solid #EAEAEA;
+    transition: opacity 0.2s ease;
+}
+
+.user-profile-dropdown.show {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Bagian Biru Header Dropdown */
+.profile-dropdown-header {
+    background-color: #2392ED;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dropdown-icon-header {
+    color: #FFFFFF !important;
+    font-size: 28px !important;
+}
+
+.profile-dropdown-header h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+/* Area Konten Data Tengah */
+.profile-dropdown-body {
+    padding: 20px 20px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+.dropdown-info-row {
+    display: grid;
+    grid-template-columns: 160px 20px 1fr;
+    align-items: center;
+}
+
+.dropdown-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: #000000;
+    font-size: 16px;
+}
+
+.dropdown-dots {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: #000000;
+    font-size: 16px;
+}
+
+.dropdown-value {
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    color: #888888;
+    font-size: 16px;
+}
+
+.dropdown-value-status {
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    color: #888888;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* Bagian Tombol OK Bawah */
+.profile-dropdown-footer {
+    padding: 0 40px 35px 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-dropdown-ok {
+    width: 100%;
+    height: 50px;
+    background-color: #2392ED;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-dropdown-ok:hover {
+    background-color: #1A7ACD;
+}
+
+/* Berikan padding pada bodi dashboard saja */
+.dashboard-body {
+    padding: 5px 40px 40px 40px;
+}
+
+/* Gaya untuk Tombol Hamburger modern */
+.btn-toggle {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ease;
+}
+
+.btn-toggle:hover {
+    background-color: #f1f3f5;
+}
+
+.hamburger-icon {
+    font-size: 26px !important;
+    color: #444;
+    font-weight: 700;
+}
+
+/* Top-Nav Open and Close*/
+.sidebar, .main-content {
+    transition: all 0.3s ease-in-out;
+}
+
+body.sidebar-closed .sidebar {
+    left: -260px;
+}
+
+body.sidebar-closed .main-content {
+    margin-left: 0;
+    width: 100%;
+}
+
+body.sidebar-closed .top-nav {
+    padding: 0 40px; 
+}

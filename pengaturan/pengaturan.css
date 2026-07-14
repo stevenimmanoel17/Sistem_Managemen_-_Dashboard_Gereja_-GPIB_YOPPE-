@@ -1,0 +1,1000 @@
+/* 1. RESET DASAR */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Loading */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.loader-logo {
+    width: 80px;
+    margin-bottom: 20px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.progress-container {
+    width: 200px;
+    height: 4px;
+    background: #f1f3f5;
+    border-radius: 10px;
+    margin: 0 auto 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background: #2392ED; /* Warna biru tema Anda */
+    animation: loading 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+@keyframes loading {
+    0% { width: 0; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+/* Class untuk menghilangkan loader */
+.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+body {
+    display: flex;
+    background-color: #F8F9FA;
+    min-height: 100vh;
+}
+
+/* 2. SIDEBAR (FIXED DI KIRI) */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background-color: #000000;
+    color: white;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo {
+    width: 80px; 
+    height: auto;  
+    margin-bottom: 15px;
+}
+
+.brand h1 {
+    font-size: 18px;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.2;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.nav-link:hover { background-color: #1a1a1a; }
+.nav-link.active { background-color: #2392ED; }
+
+.nav-menu {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.nav-menu::-webkit-scrollbar {
+    display: none;
+} 
+
+.menu-icon {
+    width: 20px;
+    margin-right: 12px;
+}
+
+/* 3. KONTEN UTAMA (GESER KE KANAN SIDEBAR) */
+.main-content {
+    margin-left: 260px; /* Sesuai lebar sidebar agar tidak tumpang tindih */
+    padding: 0;
+    width: calc(100% - 260px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-header {
+    margin-bottom: 30px;
+}
+
+.content-header h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+}
+
+/* 4. TAB NAVIGATION */
+.tab-navigation {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.tab-btn {
+    padding: 10px 25px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #888;
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    background: #2392ED;
+    color: white;
+}
+
+/* 5. KARTU PENGATURAN (CARD) */
+.setting-card {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    width: 100%; /* Memenuhi lebar main-content */
+    margin-bottom: 25px;
+}
+
+.setting-card h3 {
+    font-size: 20px;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* 6. FORM & INPUT */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.form-input, .form-input-table {
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: none;
+    background-color: #F1F3F5;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-input:focus, .form-input-table:focus {
+    background-color: #fff;
+    box-shadow: 0 0 0 2px #2392ED;
+}
+
+/* 7. TABEL & LAYOUT USER */
+.table-setting {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-setting td {
+    padding: 15px 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.user-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 25px;
+    align-items: stretch;
+}
+
+.user-layout .setting-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-layout .setting-card:last-child {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.table-setting th, .table-setting td {
+    padding: 15px 12px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.table-setting td:nth-child(4) {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+/* 8. TOMBOL & BADGE */
+.btn-save-main {
+    background-color: #2392ED;
+    color: white;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-save-main:hover {
+    background-color: #1a76c2;
+    transform: translateY(-2px);
+}
+
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.badge-super {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.badge-admin {
+    background-color: rgba(35, 146, 237, 0.1);
+    color: #2392ED;
+}
+
+/* 9. FOOTER & LOGOUT */
+.sidebar-footer {
+    margin-top: auto;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 20px;
+    margin: 15px 0;
+}
+
+.logout-link {
+    display: flex;
+    align-items: center;
+    color: #ff0000;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 15px;
+}
+
+.tab-content { display: none !important; }
+.tab-content.active { display: block !important; }
+
+/* Sembunyikan input asli */
+.form-input-file {
+    display: none;
+}
+
+/* Desain tombol upload kustom */
+.custom-file-upload {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.btn-upload {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #2392ED !important;
+    color: #ffffff !important;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+    line-height: 1;
+}
+
+.btn-upload:hover {
+    background-color: #1a84db !important;
+    color: #fff !important;
+}
+
+/* Desain Teks Nama File (Sejajar) */
+.file-name-text {
+    display: inline-block;
+    vertical-align: middle;
+    color: #888;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1; 
+}
+
+/* Kotak Pratinjau (Preview Container) */
+.preview-container {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px;
+    background-color: #F8F9FA;
+    border: 2px dashed #DDD;
+    border-radius: 15px;
+    margin-top: 15px;
+}
+
+/* Membuat Gambar Bulat Sempurna */
+.logo-circle-preview {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.preview-info {
+    line-height: 1.4;
+}
+
+.label-info {
+    font-size: 11px;
+    color: #888;
+    margin: 0;
+}
+
+.filename-info {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 4px 0;
+    word-break: break-all; 
+}
+
+.status-info {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    color: #2392ED;
+    background-color: rgba(35, 146, 237, 0.1);
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin: 0;
+}
+
+#file-name {
+    display: inline-block;
+    vertical-align: middle; 
+    color: #888;
+    font-size: 14px;
+    line-height: 1; 
+}
+
+.main-footer {
+    width: 100%;
+    padding: 15px 0; 
+    margin-top: 40px; 
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+    color: #6c757d;
+    font-size: 14px;
+    font-weight: 500;
+    clear: both; 
+}
+
+.main-footer p {
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+/* Update di pengaturan.css */
+select.swal2-select, input.swal2-input {
+    background-color: #f8f9fa !important; /* Warna dasar abu-abu sangat muda */
+    color: #444 !important;
+}
+
+select.swal2-select:hover, input.swal2-input:hover {
+    background-color: #eeeeee !important; /* Warna saat kursor di atasnya */
+}
+
+/* Menyeragamkan semua select di aplikasi */
+select.form-input {
+    cursor: pointer;
+    background-color: #F1F3F5;
+    transition: 0.3s;
+}
+
+select.form-input:hover {
+    background-color: #e9ecef;
+}
+
+.swal2-timer-progress-bar {
+    background: #2ecc71 !important;
+}
+
+/* Custom Dropdown Modern untuk Pengaturan */
+.custom-dropdown-modern {
+    position: relative;
+    width: 100%;
+}
+
+.dropdown-selected-modern {
+    background-color: #F1F3F5;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #444;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+    list-style: none !important;
+}
+
+.dropdown-selected-modern:hover { background-color: #e9ecef; }
+
+.dropdown-options-modern {
+    display: none;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    z-index: 999999 !important; 
+    border: 1px solid #eee;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    padding: 8px 0;
+}
+
+.dropdown-options-modern.show { display: block; }
+
+.dropdown-options-modern li {
+    list-style: none !important;
+    padding: 10px 18px;
+    font-size: 14px;
+    color: #444;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.dropdown-options-modern li:hover {
+    background-color: #f1f3f5;
+    color: #444;
+}
+
+.arrow-icon { font-size: 12px; color: #888; transition: transform 0.3s ease; }
+
+.custom-dropdown-modern.active .arrow-icon {
+    transform: rotate(180deg); /* Putar 180 derajat */
+}
+
+/* Style Label di dalam SweetAlert */
+.swal2-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+    margin-left: 1.1em;
+    margin-top: 15px;
+}
+
+/* Memastikan dropdown tidak terpotong oleh overflow modal */
+.swal2-popup, 
+.swal2-center, 
+.swal2-backdrop-show {
+    overflow: visible !important;
+}
+
+/* Memaksa semua kontainer SweetAlert untuk tidak memotong konten */
+.swal2-shown, 
+.swal2-height-auto, 
+.swal2-container {
+    overflow: visible !important;
+}
+
+.swal2-html-container {
+    z-index: 10 !important;
+    overflow: visible !important;
+}
+
+/* Memastikan tombol SweetAlert berada di bawah dropdown kita */
+.swal2-actions {
+    z-index: 1 !important;
+}
+
+/* top-nav */
+.top-nav {
+    width: 100%;
+    height: 70px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+    padding: 0 40px;
+    position: sticky; 
+    top: 0; 
+    z-index: 999;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-right: 10px;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Avatar - User Info*/
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 5px 10px;
+    border-radius: 50px;
+    transition: 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.user-info:hover {
+    background-color: #f8f9fa; /* Efek hover halus */
+}
+
+.user-text {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.user-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.2;
+}
+
+.user-role {
+    font-size: 11px;
+    color: #888;
+    font-weight: 500;
+}
+
+.user-avatar-wrapper {
+    position: relative;
+}
+
+.avatar-circle {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #2392ED 0%, #1A7ACD 100%); /* Gradien biru tema */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 18px;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 10px rgba(35, 146, 237, 0.2); /* Shadow modern */
+}
+
+/* Titik Hijau Status Online */
+.user-avatar-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background-color: #2ecc71; /* Warna hijau online */
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+
+/* Wadah Utama Kotak Informasi Melayang */
+.user-profile-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 15px);
+    right: 0;
+    width: 420px;
+    height: 380px;
+    background: #FFFFFF;
+    border-radius: 35px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+    z-index: 10000;
+    overflow: hidden;
+    border: 1px solid #EAEAEA;
+    transition: opacity 0.2s ease;
+}
+
+.user-profile-dropdown.show {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Bagian Biru Header Dropdown */
+.profile-dropdown-header {
+    background-color: #2392ED;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dropdown-icon-header {
+    color: #FFFFFF !important;
+    font-size: 28px !important;
+}
+
+.profile-dropdown-header h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+/* Area Konten Data Tengah */
+.profile-dropdown-body {
+    padding: 20px 20px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+.dropdown-info-row {
+    display: grid;
+    grid-template-columns: 160px 20px 1fr;
+    align-items: center;
+}
+
+.dropdown-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: #000000;
+    font-size: 16px;
+}
+
+.dropdown-dots {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: #000000;
+    font-size: 16px;
+}
+
+.dropdown-value {
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    color: #888888;
+    font-size: 16px;
+}
+
+.dropdown-value-status {
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    color: #888888;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* Bagian Tombol OK Bawah */
+.profile-dropdown-footer {
+    padding: 0 40px 35px 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-dropdown-ok {
+    width: 100%;
+    height: 50px;
+    background-color: #2392ED;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-dropdown-ok:hover {
+    background-color: #1A7ACD;
+}
+
+/* Berikan padding pada bodi dashboard saja */
+.dashboard-body {
+    padding: 20px 40px 40px 40px;
+}
+
+/* Gaya untuk Tombol Hamburger modern */
+.btn-toggle {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ease;
+}
+
+.btn-toggle:hover {
+    background-color: #f1f3f5;
+}
+
+.hamburger-icon {
+    font-size: 26px !important;
+    color: #444;
+    font-weight: 700;
+}
+
+/* Top-Nav Open and Close*/
+.sidebar, .main-content {
+    transition: all 0.3s ease-in-out;
+}
+
+body.sidebar-closed .sidebar {
+    left: -260px;
+}
+
+body.sidebar-closed .main-content {
+    margin-left: 0;
+    width: 100%;
+}
+
+body.sidebar-closed .top-nav {
+    padding: 0 40px; 
+}
+
+.table-setting tbody {
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Spinner di dalam Tabel */
+.table-loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.spinner-tabel {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #2392ED;
+    border-radius: 50%;
+    animation: spin-refresh 1s linear infinite;
+}
+
+/* Spinner Modern Minimalis */
+.spinner-modern {
+    width: 35px;
+    height: 35px;
+    border: 3px solid rgba(35, 146, 237, 0.1);
+    border-top: 3px solid #2392ED !important;
+    border-radius: 50%;
+    display: block !important;
+    animation: spin-refresh 0.8s linear infinite;
+}
+
+.table-loader-container p {
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* --- TOMBOL REFRESH DATA USER BARU --- */
+.btn-refresh-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: #2392ED; /* Biru tema */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    height: 38px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(35, 146, 237, 0.15);
+}
+
+.btn-refresh-user:hover {
+    background-color: #1A7ACD;
+}
+
+.icon-refresh-user {
+    font-size: 18px !important;
+    display: inline-block;
+}
+
+/* Animasi Putar Spinner Biru */
+@keyframes spinUser {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spinner-biru-user {
+    width: 35px;
+    height: 35px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #2392ED; /* Warna spinner biru tema */
+    border-radius: 50%;
+    animation: spinUser 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+/* LAYAR UTAMA SMARTPHONE / ANDROID (Maksimal Lebar 768px) */
+@media (max-width: 768px) {
+    /* Paksa main-content menggunakan lebar penuh tanpa memakan sisa sidebar */
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+    }
+
+    /* Kurangi padding bodi utama agar ruang form melebar secara dinamis */
+    .dashboard-body {
+        padding: 15px 12px 30px 12px !important;
+    }
+
+    /* Menghilangkan padding navigasi atas agar sejajar */
+    .top-nav {
+        padding: 0 15px !important;
+    }
+
+    /* Mengubah susunan navigasi tab tombol (Profil, Struktur, Users) agar fleksibel */
+    .tab-navigation {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        padding: 10px !important;
+    }
+
+    .tab-btn {
+        flex: 1;
+        padding: 8px 15px !important;
+        font-size: 13px !important;
+        text-align: center;
+    }
+
+    /* Paksa tata letak user dan kartu pengaturan mematuhi batas lebar layar HP */
+    .user-layout {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+        width: 100% !important;
+    }
+
+    /* Mengubah struktur layout dari menyamping menjadi bertumpuk ke bawah */
+    .user-layout {
+        grid-template-columns: 1fr !important; /* Menjadi satu kolom penuh vertikal */
+        gap: 20px !important;
+    }
+
+    /* Melepaskan pembatasan tinggi maksimal agar tabel tidak bergulir di dalam boks yang sempit */
+    .user-layout .setting-card:last-child {
+        max-height: none !important;
+        overflow-y: visible !important;
+    }
+
+    /* MENYERAGAMKAN KOTAK INPUT FORM AGAR RESPONSIVE 100% */
+    .form-group {
+        width: 100% !important;
+    }
+
+    .form-input, 
+    .form-input-table,
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="password"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Menyelaraskan padding kartu pengaturan agar lebih pas di layar HP */
+    .setting-card {
+        padding: 20px 15px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden;
+    }
+
+    /* Memastikan area pembungkus tabel bisa digulir horizontal secara mandiri agar teks tidak padat */
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Mengamankan ukuran tombol agar pas di bodi kartu */
+    .btn-save-main {
+        width: 100% !important; /* Tombol otomatis memanjang penuh di HP */
+        text-align: center;
+    }
+
+    /* Mengunci tombol utama agar memanjang penuh di bodi HP */
+    .btn-save-main,
+    form button[type="submit"] {
+        width: 100% !important;
+        text-align: center;
+        padding: 12px 20px !important;
+    }
+
+    /* Mengamankan tampilan tabel data user aktif */
+    .table-responsive {
+        width: 100% !important;
+        overflow-x: auto !important; /* Mengaktifkan gulir horizontal jika kolom tabel terlalu lebar */
+        -webkit-overflow-scrolling: touch;
+    }
+}
