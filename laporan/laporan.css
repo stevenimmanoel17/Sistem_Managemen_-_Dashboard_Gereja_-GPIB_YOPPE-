@@ -137,14 +137,14 @@ body { display: flex; background-color: #F8F9FA; min-height: 100vh; overflow-x: 
 /* TABLES */
 .tab-content { display: none; }
 .tab-content.active { display: block; }
-.table-container { background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-.table-responsive { width: 100%; overflow-x: auto;}
+.table-container { background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 100%; overflow: hidden; }
+.table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .report-table th, .report-table td { white-space: nowrap;}
-.report-table { width: 100%; border-collapse: collapse; text-align: center; }
-.report-table th { padding: 15px; color: #888; border-bottom: 2px solid #f1f3f5; font-size: 14px; text-align: center; }
-.report-table td { padding: 15px; border-bottom: 1px solid #f8f9fa; font-size: 14px; color: #333; white-space: nowrap;}
-.report-table td.text-green { color: #28a745 !important; font-weight: 600; text-align: right; }
-.report-table td.text-red { color: #dc3545 !important; font-weight: 600; text-align: right; }
+.report-table { width: 100%; min-width: 1200px; border-collapse: collapse; text-align: center; }
+.report-table th { padding: 15px; color: #888; border-bottom: 2px solid #f1f3f5; font-size: 14px; text-align: center; white-space: nowrap; }
+.report-table td { padding: 15px; border-bottom: 1px solid #f8f9fa; font-size: 14px; color: #333; white-space: nowrap; word-break: break-word;}
+.report-table td.text-green { color: #28a745 !important; font-weight: 600; text-align: right; white-space: nowrap; }
+.report-table td.text-red { color: #dc3545 !important; font-weight: 600; text-align: right; white-space: nowrap; }
 .text-right { text-align: right; font-weight: 600;}
 
 
@@ -555,4 +555,50 @@ body.sidebar-closed .top-nav {
 .status-laporan-non {
     background-color: #fceaea;
     color: #e74c3c;
+}
+
+/* PERBAIKAN RESPONSIF SIDEBAR MOBILE & ANDROID */
+@media (max-width: 768px) {
+    /* Sembunyikan sidebar di luar layar sebelah kiri */
+    .sidebar {
+        left: -260px;
+        transition: left 0.3s ease-in-out;
+    }
+
+    /* Main content default 100% layar tanpa margin left */
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Saat sidebar dibuka (kelas sidebar-closed dilepas) -> Dorong main-content ke kanan */
+    body:not(.sidebar-closed) .sidebar {
+        left: 0 !important;
+    }
+
+    body:not(.sidebar-closed) .main-content {
+        transform: translateX(260px); /* Geser seluruh konten ke kanan sejauh lebar sidebar */
+    }
+
+    /* Penyesuaian padding bodi & navigasi agar pas di HP */
+    .dashboard-body {
+        padding: 15px 12px 30px 12px !important;
+    }
+
+    .top-nav {
+        padding: 0 15px !important;
+    }
+
+    .tab-navigation {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .tab-btn {
+        flex: 1;
+        padding: 10px !important;
+        font-size: 13px !important;
+    }
 }

@@ -320,13 +320,13 @@ if (!$tampil_jemaat) {
                             <span><?= ($offset + 1); ?>-<?= min($offset + $limit, $total_data); ?> dari <?= $total_data; ?></span>
                             <div class="pagination-buttons">
                                 <?php if($halaman > 1): ?>
-                                    <a href="?halaman=<?= $halaman - 1; ?>&limit=<?= $limit; ?>" class="btn-page"><</a>
+                                    <a href="javascript:void(0)" onclick="loadPageData(<?= $halaman - 1; ?>, <?= $limit; ?>)" class="btn-page"><</a>
                                 <?php endif; ?>
                                 
                                 <button class="btn-page active"><?= $halaman; ?></button>
                                 
                                 <?php if($halaman < $total_halaman): ?>
-                                    <a href="?halaman=<?= $halaman + 1; ?>&limit=<?= $limit; ?>" class="btn-page">></a>
+                                    <a href="javascript:void(0)" onclick="loadPageData(<?= $halaman + 1; ?>, <?= $limit; ?>)" class="btn-page">></a>
                                 <?php endif; ?>
                             </div>
                         </div>

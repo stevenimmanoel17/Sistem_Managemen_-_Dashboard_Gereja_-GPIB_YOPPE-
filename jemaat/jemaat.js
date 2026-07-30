@@ -406,3 +406,50 @@ window.addEventListener('click', function(e) {
         dropdown.classList.remove('show');
     }
 });
+
+// Fungsi memuat data tabel via AJAX berdasarkan halaman & limit
+function loadPageData(page, limit) {
+    const tableBody = document.querySelector('.data-table tbody');
+    const tableContainer = document.querySelector('.table-container');
+    const colCount = document.querySelector('.data-table thead tr').childElementCount;
+    
+    // Ambil filter kategori yang sedang aktif jika ada
+    const filterVal = document.getElementById("filterCategory") ? document.getElementById("filterCategory").value : 'all';
+
+    // Tampilkan efek loader halus di area tabel saja
+    tableBody.style.opacity = '0.4';
+    
+    const requestUrl = `jemaat.php?halaman=${page}&limit=${limit}&filter=${encodeURIComponent(filterVal)}`;
+
+    fetch(requestUrl)
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            // Ambil elemen tabel dan pagination baru dari respon server
+            const newTableContent = doc.querySelector('.data-table tbody').innerHTML;
+            const newFooterContent = doc.querySelector('.table-footer').innerHTML;
+
+            // Perbarui isi tabel dan footer pagination saja
+            document.querySelector('.data-table tbody').innerHTML = newTableContent;
+            document.querySelector('.table-footer').innerHTML = newFooterContent;
+
+            // Kembalikan transparansi tabel
+            document.querySelector('.data-table tbody').style.opacity = '1';
+
+            // Jalankan filter pencarian lokal jika ada kata kunci di input search
+            if (typeof combinedFilter === 'function') {
+                combinedFilter();
+            }
+        })
+        .catch(error => {
+            console.error('Gagal memuat data:', error);
+            tableBody.style.opacity = '1';
+        });
+}
+
+// Fungsi mengubah limit jumlah baris data per halaman
+function changeLimit(limitValue) {
+    loadPageData(1, limitValue);
+}

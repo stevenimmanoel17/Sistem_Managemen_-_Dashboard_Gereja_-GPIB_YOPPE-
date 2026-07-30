@@ -251,50 +251,63 @@ document.addEventListener('DOMContentLoaded', function() {
                 sidebarMenu.scrollTop = activeLink.offsetTop - (sidebarMenu.clientHeight / 2) + (activeLink.clientHeight / 2);
             }
 
-    // AJAX Form Submit (Profil, Struktur, Tambah User)
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                const action = this.getAttribute('action');
-                if (['update_profil.php', 'update_struktur.php', 'add_user.php'].includes(action)) {
-                    e.preventDefault();
-                    fetch(action, { method: 'POST', body: new FormData(this) })
-                    .then(res => res.text())
-                    .then(data => {
-                        // Validasi apakah server mengembalikan string 'success'
-                        if (data.trim() === 'success') {
-                            Swal.fire({ icon: 'success', title: 'Berhasil!', text: 'Data telah diperbarui.', timer: 2000, showConfirmButton: false, timerProgressBar: true,
-                            didOpen: (toast) => {
-                                const progressBar = toast.querySelector('.swal2-timer-progress-bar');
-                                if (progressBar) progressBar.style.backgroundColor = '#2ecc71';
-                            }
-                             });
-                            
-                            if (action === 'add_user.php') { 
-                                this.reset(); 
-                                document.getElementById('roleTextTambah').innerText = 'Admin';
-                                document.getElementById('roleInputTambah').value = 'Admin';
-                                refreshUserTable(); 
-                            }
-                        } else {
-                            if (action !== 'add_user.php') {
-                                Swal.fire({ icon: 'success', title: 'Berhasil!', text: 'Data telah diperbarui.', timer: 2000, showConfirmButton: false, timerProgressBar: true, 
-                                didOpen: (toast) => {
-                                    const progressBar = toast.querySelector('.swal2-timer-progress-bar');
-                                    if (progressBar) progressBar.style.backgroundColor = '#2ecc71';
-                                }
-                                });
-                            } else {
-                                Swal.fire({ icon: 'error', title: 'Gagal!', text: 'Terjadi kesalahan pada server.' });
-                            }
+// AJAX Form Submit (Profil, Struktur, Tambah User)
+document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        const action = this.getAttribute('action');
+        if (['update_profil.php', 'update_struktur.php', 'add_user.php'].includes(action)) {
+            e.preventDefault();
+            
+            fetch(action, { method: 'POST', body: new FormData(this) })
+            .then(res => res.text())
+            .then(data => {
+                // Bersihkan spasi berlebih pada teks balasan dari server
+                const response = data.trim();
+
+                if (response === 'success') {
+                    // Tampilkan notifikasi sukses
+                    Swal.fire({ 
+                        icon: 'success', 
+                        title: 'Berhasil!', 
+                        text: 'Data telah diperbarui.', 
+                        timer: 2000, 
+                        showConfirmButton: false, 
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            const progressBar = toast.querySelector('.swal2-timer-progress-bar');
+                            if (progressBar) progressBar.style.backgroundColor = '#2ecc71';
                         }
-                    })
-                    .catch(err => {
-                        console.error("Error submit form:", err);
-                        Swal.fire({ icon: 'error', title: 'Error!', text: 'Gagal terhubung ke server.' });
+                    });
+
+                    // Jika form yang dikirim adalah Tambah User
+                    if (action === 'add_user.php') { 
+                        this.reset(); 
+                        document.getElementById('roleTextTambah').innerText = 'Admin';
+                        document.getElementById('roleInputTambah').value = 'Admin';
+                        if (typeof jalankanPembaruanDataUser === 'function') {
+                            jalankanPembaruanDataUser(); // Refresh tabel secara otomatis
+                        }
+                    }
+                } else {
+                    // Tampilkan pesan gagal jika respons dari PHP bukan 'success'
+                    Swal.fire({ 
+                        icon: 'error', 
+                        title: 'Gagal!', 
+                        text: 'Terjadi kesalahan pada server saat menyimpan data.' 
                     });
                 }
+            })
+            .catch(err => {
+                console.error("Error submit form:", err);
+                Swal.fire({ 
+                    icon: 'error', 
+                    title: 'Error!', 
+                    text: 'Gagal terhubung ke server.' 
+                });
             });
-        });
+        }
+    });
+});
 
 // --- LOGIKA MENUTUP DROPDOWN ---
 window.addEventListener('click', function(e) {

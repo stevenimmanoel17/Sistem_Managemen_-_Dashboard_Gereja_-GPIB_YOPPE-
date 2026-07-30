@@ -299,6 +299,7 @@ $waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i');
             </div>
 
             <div class="table-container">
+                <div class="table-responsive">
                 <table class="report-table">
                     <thead>
                         <tr>
@@ -343,6 +344,7 @@ $waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i');
                         </tr>
                     </tfoot>
                 </table>
+                </div>
             </div>
         </div>
     </div>

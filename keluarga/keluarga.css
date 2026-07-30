@@ -1116,3 +1116,89 @@ body.sidebar-closed .main-content {
 body.sidebar-closed .top-nav {
     padding: 0 40px; 
 }
+
+/* ========================================================= */
+/*   RESPONSIF MOBILE / ANDROID - PUSH SIDEBAR LOGIC        */
+/* ========================================================= */
+@media (max-width: 768px) {
+    /* Sembunyikan sidebar di luar layar sebelah kiri secara default */
+    .sidebar {
+        left: -260px;
+        transition: left 0.3s ease-in-out;
+    }
+
+    /* Main content default 100% lebar layar tanpa margin-left */
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Saat sidebar dibuka (kelas sidebar-closed dilepas dari <body>) */
+    body:not(.sidebar-closed) .sidebar {
+        left: 0 !important;
+    }
+
+    body:not(.sidebar-closed) .main-content {
+        transform: translateX(260px); /* Dorong seluruh isi konten ke kanan sejauh lebar sidebar */
+    }
+
+    /* Penyesuaian Komponen Halaman Data Keluarga di Layar HP */
+    .dashboard-body {
+        padding: 15px 12px 30px 12px !important;
+    }
+
+    .top-nav {
+        padding: 0 15px !important;
+    }
+
+    /* Penyesuaian Header Utama & Pencarian/Filter */
+    .header-content {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
+    }
+
+    .header-right {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .search-wrapper {
+        width: 100% !important;
+    }
+
+    .btn-refresh {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .custom-dropdown-container {
+        width: 100% !important;
+    }
+
+    .custom-select {
+        min-width: 100% !important;
+    }
+
+    /* Grid Kartu Keluarga menjadi 1 Kolom Penuh di HP */
+    .family-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    /* Penyesuaian Modal Detail Anggota Keluarga */
+    .modal-content {
+        width: 92% !important;
+        padding: 20px 15px !important;
+    }
+
+    .detail-table-modern th,
+    .detail-table-modern td {
+        padding: 8px 5px !important;
+        font-size: 12px !important;
+    }
+}

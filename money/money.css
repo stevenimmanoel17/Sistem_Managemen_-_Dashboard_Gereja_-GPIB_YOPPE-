@@ -830,3 +830,100 @@ body.sidebar-closed .top-nav {
         font-size: 22px !important; 
     }
 }
+
+/* ========================================================= */
+/*   RESPONSIF MOBILE / ANDROID - PUSH SIDEBAR LOGIC        */
+/* ========================================================= */
+@media (max-width: 768px) {
+    /* Sembunyikan sidebar di luar layar sebelah kiri secara default */
+    .sidebar {
+        left: -260px;
+        transition: left 0.3s ease-in-out;
+    }
+
+    /* Main content default 100% lebar layar tanpa margin-left */
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Saat sidebar dibuka (kelas sidebar-closed dilepas dari <body>) */
+    body:not(.sidebar-closed) .sidebar {
+        left: 0 !important;
+    }
+
+    body:not(.sidebar-closed) .main-content {
+        transform: translateX(260px); /* Mendorong seluruh isi konten ke kanan sejauh lebar sidebar */
+    }
+
+    /* Penyesuaian Komponen Halaman Keuangan di Layar HP */
+    .dashboard-body {
+        padding: 15px 12px 30px 12px !important;
+    }
+
+    .top-nav {
+        padding: 0 15px !important;
+    }
+
+    /* Header & Tombol Tambah Transaksi */
+    .content-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
+    }
+
+    .header-buttons {
+        width: 100% !important;
+    }
+
+    .btn-add {
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    /* Filter Periode Seksi */
+    .filter-section {
+        padding: 15px !important;
+    }
+
+    .filter-group {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+
+    .filter-group .custom-dropdown {
+        width: 100% !important;
+    }
+
+    /* Kartu Statistik Keuangan (Pemasukan, Pengeluaran, Saldo) Vertikal 1 Kolom */
+    .stats-container {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    .stat-card {
+        padding: 18px 20px !important;
+    }
+
+    .stat-number {
+        font-size: 22px !important;
+    }
+
+    /* Penyesuaian Form Modal Tambah/Edit Transaksi di HP */
+    .modal-content {
+        width: 92% !important;
+        padding: 20px 15px !important;
+    }
+
+    .type-selection {
+        gap: 10px !important;
+    }
+
+    .type-box {
+        padding: 10px !important;
+        font-size: 13px !important;
+    }
+}

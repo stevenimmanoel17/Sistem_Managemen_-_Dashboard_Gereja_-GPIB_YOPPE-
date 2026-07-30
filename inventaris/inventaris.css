@@ -729,8 +729,81 @@ body.sidebar-closed .top-nav {
 
 /* LAYAR UTAMA SMARTPHONE / ANDROID (Maksimal Lebar 768px) */
 @media (max-width: 768px) {
+    /* Sembunyikan sidebar di luar layar sebelah kiri */
+    .sidebar {
+        left: -260px;
+        transition: left 0.3s ease-in-out;
+    }
+
+    /* Main content default 100% layar tanpa margin-left */
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Saat sidebar dibuka (kelas sidebar-closed dilepas dari <body>) */
+    body:not(.sidebar-closed) .sidebar {
+        left: 0 !important;
+    }
+
+    body:not(.sidebar-closed) .main-content {
+        transform: translateX(260px); /* Mendororng seluruh konten utama ke kanan */
+    }
+
+    /* Penyesuaian Komponen Halaman Inventaris di Layar HP */
+    .dashboard-body {
+        padding: 15px 12px 30px 12px !important;
+    }
+
+    .top-nav {
+        padding: 0 15px !important;
+    }
+
+    .content-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
+    }
+
+    .btn-add {
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    /* Penyesuaian Filter & Pencarian agar stacked vertikal */
+    .search-section > div {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .search-section > div > div {
+        width: 100% !important;
+    }
+
+    .btn-refresh-tabel {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* Penyesuaian Modal Form Tambah/Edit/Detail di HP */
+    .modal-content {
+        width: 92% !important;
+        padding: 20px 15px !important;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .form-grid .form-group {
+        grid-column: span 1 !important;
+    }
+
     .stats-container {
-        /* JALAN KELUAR: Mengubah susunan 3 kolom menyamping menjadi 1 kolom penuh berjejer ke bawah */
+        /* Mengubah susunan 3 kolom menyamping menjadi 1 kolom penuh berjejer ke bawah */
         grid-template-columns: 1fr !important; 
         gap: 15px !important;
     }
