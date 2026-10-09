@@ -408,3 +408,45 @@ window.addEventListener('click', function(e) {
         dropdown.classList.remove('show');
     }
 });
+
+// --- FUNGSI PAGINATION & LIMIT DATA ---
+
+// Fungsi mengubah limit baris data
+function changeLimit(limitValue) {
+    loadPageData(1, limitValue);
+}
+
+// Fungsi memuat data tabel via AJAX berdasarkan halaman & limit
+function loadPageData(page, limit) {
+    const tableBody = document.querySelector('.transaction-table tbody');
+    const dropdown = document.getElementById('dropdownPeriode');
+    
+    // Ambil teks periode yang sedang aktif dipilih
+    const periodeAktif = dropdown ? dropdown.querySelector('.dropdown-selected').innerText.trim() : 'Semua Waktu';
+
+    // Beri efek transparansi loading pada tabel
+    tableBody.style.opacity = '0.4';
+
+    const requestUrl = `money.php?halaman=${page}&limit=${limit}&periode=${encodeURIComponent(periodeAktif)}`;
+
+    fetch(requestUrl)
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            const newTableContent = doc.querySelector('.transaction-table tbody').innerHTML;
+            const newFooterContent = doc.querySelector('.table-footer').innerHTML;
+
+            // Perbarui baris tabel dan tombol pagination
+            document.querySelector('.transaction-table tbody').innerHTML = newTableContent;
+            document.querySelector('.table-footer').innerHTML = newFooterContent;
+
+            // Kembalikan transparansi tabel
+            tableBody.style.opacity = '1';
+        })
+        .catch(error => {
+            console.error('Gagal memuat data:', error);
+            tableBody.style.opacity = '1';
+        });
+}

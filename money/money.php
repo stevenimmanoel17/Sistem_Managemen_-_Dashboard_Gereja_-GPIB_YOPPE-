@@ -31,8 +31,20 @@ $pengeluaran = mysqli_fetch_assoc($res_out)['total'] ?? 0;
 // Hitung Saldo Akhir
 $saldo_akhir = $pemasukan - $pengeluaran;
 
-// Ambil daftar transaksi terbaru
-$query_transaksi = "SELECT * FROM keuangan $filter_sql ORDER BY tanggal DESC, id DESC";
+// LOGIKA PAGINATION
+$limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+$halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+$offset = ($halaman - 1) * $limit;
+
+// HITUNG TOTAL DATA TRANSAKSI SESUAI PERIODE
+$query_total = "SELECT COUNT(*) AS total FROM keuangan $filter_sql";
+$result_total = mysqli_query($conn, $query_total);
+$row_total = mysqli_fetch_assoc($result_total);
+$total_data = $row_total['total'];
+$total_halaman = ceil($total_data / $limit);
+
+// Ambil daftar transaksi dengan LIMIT dan OFFSET
+$query_transaksi = "SELECT * FROM keuangan $filter_sql ORDER BY tanggal DESC, id DESC LIMIT $offset, $limit";
 $tampil_transaksi = mysqli_query($conn, $query_transaksi);
 
 if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
@@ -53,7 +65,7 @@ $waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i');
     <link rel="icon" type="image/png" href="../icon/GPIB-NoCapt.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="money.css">
+    <link rel="stylesheet" href="money.css?v=<?php echo time(); ?>">
 </head>
 <body>
     <div id="loading-screen">
@@ -179,8 +191,10 @@ $waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i');
 
             <div class="filter-section">
                 <div class="filter-group">
-                    <img src="../icon/funnel.png" class="filter-icon">
-                    <label>Periode:</label>
+                    <div class="filter-label-wrapper">
+                        <img src="../icon/funnel.png" class="filter-icon">
+                        <label>Periode:</label>
+                    </div>
                     <div class="custom-dropdown" id="dropdownPeriode" onclick="this.classList.toggle('active'); event.stopPropagation();">
                         <div class="dropdown-selected">
                             <?php echo $periode; ?>
@@ -255,6 +269,33 @@ $waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i');
                         <?php } ?>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- TAMPILAN FOOTER PAGINATION -->
+            <div class="table-footer">
+                <div class="show-entries">
+                    <span>Tampilkan</span>
+                    <select id="entryLimit" onchange="changeLimit(this.value)">
+                        <option value="10" <?= $limit == 10 ? 'selected' : ''; ?>>10</option>
+                        <option value="20" <?= $limit == 20 ? 'selected' : ''; ?>>20</option>
+                        <option value="50" <?= $limit == 50 ? 'selected' : ''; ?>>50</option>
+                    </select>
+                    <span>data per halaman.</span>
+                </div>
+                <div class="pagination">
+                    <span><?= ($total_data > 0 ? $offset + 1 : 0); ?>-<?= min($offset + $limit, $total_data); ?> dari <?= $total_data; ?></span>
+                    <div class="pagination-buttons">
+                        <?php if($halaman > 1): ?>
+                            <a href="javascript:void(0)" onclick="loadPageData(<?= $halaman - 1; ?>, <?= $limit; ?>)" class="btn-page">&lt;</a>
+                        <?php endif; ?>
+                        
+                        <button class="btn-page active"><?= $halaman; ?></button>
+                        
+                        <?php if($halaman < $total_halaman): ?>
+                            <a href="javascript:void(0)" onclick="loadPageData(<?= $halaman + 1; ?>, <?= $limit; ?>)" class="btn-page">&gt;</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
         </div> <footer class="main-footer">
             <p>&copy; 2026 Church Management System - Versi 3.0</p>

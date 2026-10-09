@@ -297,7 +297,7 @@ if (!$tampil_jemaat) {
                                     <?php endwhile; ?>
                                 <?php endif; ?>
                                     <tr id="noDataRow" style="<?= (mysqli_num_rows($tampil_jemaat) > 0) ? 'display: none;' : ''; ?>">
-                                        <td colspan="7" class="empty-state-container">
+                                        <td colspan="8" class="empty-state-container">
                                             <div class="empty-state">
                                                 <p>Belum ada data jemaat yang sesuai.</p>
                                                 <span>Silakan klik tombol "+ Tambah Jemaat" untuk menambahkan.</span>
@@ -317,7 +317,7 @@ if (!$tampil_jemaat) {
                             <span>data per halaman.</span>
                         </div>
                         <div class="pagination">
-                            <span><?= ($offset + 1); ?>-<?= min($offset + $limit, $total_data); ?> dari <?= $total_data; ?></span>
+                            <span><?= ($total_data > 0 ? $offset + 1 : 0); ?>-<?= min($offset + $limit, $total_data); ?> dari <?= $total_data; ?></span>
                             <div class="pagination-buttons">
                                 <?php if($halaman > 1): ?>
                                     <a href="javascript:void(0)" onclick="loadPageData(<?= $halaman - 1; ?>, <?= $limit; ?>)" class="btn-page"><</a>

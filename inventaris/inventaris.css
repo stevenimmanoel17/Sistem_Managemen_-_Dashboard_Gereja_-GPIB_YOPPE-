@@ -615,7 +615,7 @@ body.sidebar-closed .top-nav {
 /* Desain Modern Kartu Statistik */
 .stats-container { 
     display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(4, 1fr); 
     gap: 20px; 
     margin-bottom: 30px; 
 }
@@ -661,6 +661,9 @@ body.sidebar-closed .top-nav {
 
 .green { border-left: 6px solid #2ecc71; }
 .green h4 { color: #2ecc71 !important; }
+
+.yellow { border-left: 6px solid #f39c12; }
+.yellow h4 { color: #f39c12 !important; }
 
 .red { border-left: 6px solid #e74c3c; }
 .red h4 { color: #e74c3c !important; }
@@ -802,21 +805,98 @@ body.sidebar-closed .top-nav {
         grid-column: span 1 !important;
     }
 
+    /* Grid 2x2 untuk Kartu Statistik di Layar Handphone */
     .stats-container {
-        /* Mengubah susunan 3 kolom menyamping menjadi 1 kolom penuh berjejer ke bawah */
-        grid-template-columns: 1fr !important; 
-        gap: 15px !important;
+        grid-template-columns: repeat(2, 1fr) !important; 
+        gap: 12px !important;
     }
 
     .stat-card {
-        padding: 18px 20px !important; /* Membuat ukuran boks sedikit lebih ramping di HP */
+        padding: 14px 15px !important; /* Ruang dalam dibuat lebih ramping */
+        border-radius: 12px !important;
     }
 
     .stat-card h4 {
-        font-size: 14px !important; /* Mengecilkan teks judul kategori agar tidak meluber */
+        font-size: 11px !important; /* Ukuran teks judul proporsional agar tidak turun baris */
+        letter-spacing: 0px !important;
+    }
+
+    .stat-card .stat-header img,
+    .stat-card .stat-header span {
+        font-size: 22px !important;
+        width: 24px !important; /* Menyesuaikan ukuran ikon */
     }
 
     .stat-number {
-        font-size: 24px !important; /* Menjaga ukuran angka total tetap proporsional dan jelas */
+        font-size: 20px !important; /* Ukuran angka tetap jelas dan ringkas */
+        margin-top: 4px !important;
     }
+}
+
+/* ========================================= */
+/*   PAGINATION & SHOW ENTRIES STYLING       */
+/* ========================================= */
+
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 0 10px;
+}
+
+.show-entries {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.show-entries select {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    cursor: pointer;
+    background-color: #fff;
+    font-size: 14px;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.pagination-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-page {
+    padding: 6px 14px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 14px;
+    text-decoration: none;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-page.active {
+    background: #2392ED;
+    color: white;
+    border-color: #2392ED;
+}
+
+.btn-page:hover:not(.active) {
+    background: #f1f3f5;
 }

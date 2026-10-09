@@ -255,19 +255,16 @@ function showDetailModal(data) {
 
 function filterInventaris() {
     let searchInput = document.getElementById("searchInput").value.toLowerCase();
-    let filterKondisi = document.getElementById("filterKondisi").value;
     let rows = document.querySelectorAll("#inventarisTableBody .data-row");
     let visibleRowsCount = 0;
 
     rows.forEach(row => {
         let kode = row.children[0].textContent.toLowerCase();
         let nama = row.children[1].textContent.toLowerCase();
-        let kondisi = row.children[4].textContent.trim();
 
         let matchSearch = kode.includes(searchInput) || nama.includes(searchInput);
-        let matchKondisi = (filterKondisi === "all") || (kondisi === filterKondisi);
 
-        if (matchSearch && matchKondisi) {
+        if (matchSearch) {
             row.style.display = "";
             visibleRowsCount++;
         } else {
@@ -348,7 +345,10 @@ function toggleFilterDropdown() {
 function pilihFilter(nilai, teks) {
     document.getElementById('filterKondisi').value = nilai;
     document.getElementById('filterText').querySelector('span').innerText = teks;
-    filterInventaris();
+
+    // Ambil limit yang sedang aktif, lalu minta server memuat dari halaman 1
+    const limit = document.getElementById('entryLimit') ? document.getElementById('entryLimit').value : 10;
+    loadPageData(1, limit);
 }
 
 window.addEventListener('click', function(e) {
@@ -523,3 +523,44 @@ window.addEventListener('click', function(e) {
         dropdown.classList.remove('show');
     }
 });
+
+// --- FUNGSI PAGINATION AJAX INVENTARIS ---
+function changeLimit(limitValue) {
+    loadPageData(1, limitValue);
+}
+
+function loadPageData(page, limit) {
+    const tableBody = document.getElementById('inventarisTableBody');
+    const filterKondisi = document.getElementById('filterKondisi') ? document.getElementById('filterKondisi').value : 'all';
+
+    // Beri efek transparansi loading pada tabel
+    if (tableBody) tableBody.style.opacity = '0.4';
+
+    // Kirim nomor halaman, limit, dan kondisi yang sedang dipilih ke server
+    const requestUrl = `inventaris.php?halaman=${page}&limit=${limit}&kondisi=${encodeURIComponent(filterKondisi)}`;
+
+    fetch(requestUrl)
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            const newTableContent = doc.getElementById('inventarisTableBody').innerHTML;
+            const newFooterContent = doc.querySelector('.table-footer').innerHTML;
+
+            // Perbarui data tabel dan tombol navigasi pagination
+            document.getElementById('inventarisTableBody').innerHTML = newTableContent;
+            document.querySelector('.table-footer').innerHTML = newFooterContent;
+
+            if (tableBody) tableBody.style.opacity = '1';
+
+            // Sinkronkan kembali dengan kotak pencarian jika user sedang mengetik nama/kode
+            if (typeof filterInventaris === 'function') {
+                filterInventaris();
+            }
+        })
+        .catch(error => {
+            console.error('Gagal memuat data inventaris:', error);
+            if (tableBody) tableBody.style.opacity = '1';
+        });
+}

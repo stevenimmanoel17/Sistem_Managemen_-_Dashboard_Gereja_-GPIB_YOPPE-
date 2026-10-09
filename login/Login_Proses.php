@@ -7,8 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = mysqli_real_escape_string($conn, trim($_POST['username']));
     $password = trim($_POST['password']);
     
-    $max_attempts = 5; 
-    $lockout_time = 10; // Menit
+    $max_attempts = 6; // Banyak Percobaan Login
+    $lockout_time = 2; // Lama Durasi dapat mencoba login kembali (Menit)
 
     $query = "SELECT * FROM users WHERE username='$username'";
     $result = mysqli_query($conn, $query);

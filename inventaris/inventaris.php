@@ -13,9 +13,29 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
 
 $total_barang = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM inventaris"));
 $kondisi_baik = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM inventaris WHERE kondisi = 'Baik'"));
+$kondisi_perlu_perbaikan = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM inventaris WHERE kondisi = 'Perlu Perbaikan'"));
 $kondisi_rusak = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM inventaris WHERE kondisi = 'Rusak'"));
 
-$query = mysqli_query($conn, "SELECT * FROM inventaris ORDER BY nama_barang ASC");
+// TANGKAP FILTER KONDISI DARI URL
+$filter_kondisi = isset($_GET['kondisi']) ? mysqli_real_escape_string($conn, trim($_GET['kondisi'])) : 'all';
+$where_kondisi = "";
+if ($filter_kondisi !== 'all' && $filter_kondisi !== '') {
+    $where_kondisi = "WHERE kondisi = '$filter_kondisi'";
+}
+
+// LOGIKA PAGINATION
+$limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+$halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+$offset = ($halaman - 1) * $limit;
+
+// HITUNG TOTAL DATA BERDASARKAN FILTER YANG DIPILIH
+$query_total = mysqli_query($conn, "SELECT COUNT(*) AS total FROM inventaris $where_kondisi");
+$row_total = mysqli_fetch_assoc($query_total);
+$total_data = $row_total['total'];
+$total_halaman = ceil($total_data / $limit);
+
+// AMBIL DATA DENGAN FILTER KONDISI DAN LIMIT
+$query = mysqli_query($conn, "SELECT * FROM inventaris $where_kondisi ORDER BY nama_barang ASC LIMIT $offset, $limit");
 
 $nama_user = $_SESSION['username'] ?? 'User';
 $waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i'); 
@@ -27,7 +47,7 @@ $waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventaris</title>
-    <link rel="stylesheet" href="inventaris.css">
+    <link rel="stylesheet" href="inventaris.css?v=<?php echo time(); ?>">
     <link rel="icon" type="image/png" href="../icon/GPIB-NoCapt.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -154,6 +174,14 @@ $waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i');
                     </div>
                     <p class="stat-number"><?= $kondisi_baik; ?></p>
                 </div>
+                <!-- Card Baru: Perlu Perbaikan -->
+                <div class="stat-card yellow">
+                    <div class="stat-header">
+                        <h4>Perlu Perbaikan</h4>
+                        <span class="material-symbols-outlined" style="font-size: 32px; color: #f39c12; opacity: 0.6;">build</span>
+                    </div>
+                    <p class="stat-number"><?= $kondisi_perlu_perbaikan; ?></p>
+                </div>
                 <div class="stat-card red">
                     <div class="stat-header">
                         <h4>Kondisi Rusak</h4>
@@ -263,6 +291,32 @@ $waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i');
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <!-- TAMPILAN FOOTER PAGINATION -->
+            <div class="table-footer">
+                <div class="show-entries">
+                    <span>Tampilkan</span>
+                    <select id="entryLimit" onchange="changeLimit(this.value)">
+                        <option value="10" <?= $limit == 10 ? 'selected' : ''; ?>>10</option>
+                        <option value="20" <?= $limit == 20 ? 'selected' : ''; ?>>20</option>
+                        <option value="50" <?= $limit == 50 ? 'selected' : ''; ?>>50</option>
+                    </select>
+                    <span>data per halaman.</span>
+                </div>
+                <div class="pagination">
+                    <span><?= ($total_data > 0 ? $offset + 1 : 0); ?>-<?= min($offset + $limit, $total_data); ?> dari <?= $total_data; ?></span>
+                    <div class="pagination-buttons">
+                        <?php if($halaman > 1): ?>
+                            <a href="javascript:void(0)" onclick="loadPageData(<?= $halaman - 1; ?>, <?= $limit; ?>)" class="btn-page">&lt;</a>
+                        <?php endif; ?>
+                        
+                        <button class="btn-page active"><?= $halaman; ?></button>
+                        
+                        <?php if($halaman < $total_halaman): ?>
+                            <a href="javascript:void(0)" onclick="loadPageData(<?= $halaman + 1; ?>, <?= $limit; ?>)" class="btn-page">&gt;</a>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>

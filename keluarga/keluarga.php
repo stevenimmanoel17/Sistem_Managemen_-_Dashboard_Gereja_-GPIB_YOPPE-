@@ -10,24 +10,39 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
 // Ambil input pencarian jika ada
 $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
 
-// Query untuk mengambil data keluarga (Grouping No KK)
+// Hitung total seluruh keluarga untuk header statistik
+$total_keluarga = mysqli_num_rows(mysqli_query($conn, "SELECT DISTINCT no_kk FROM jemaat"));
+
+// LOGIKA PAGINATION
+$limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+$halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+$offset = ($halaman - 1) * $limit;
+
+// Klausa pencarian
+$where_search = "";
+if (!empty($search)) {
+    $where_search = "WHERE no_kk LIKE '%$search%' OR nama_lengkap LIKE '%$search%'";
+}
+
+// Hitung total grup keluarga sesuai filter pencarian
+$query_count = "SELECT COUNT(DISTINCT no_kk) as total FROM jemaat $where_search";
+$res_count = mysqli_query($conn, $query_count);
+$row_count = mysqli_fetch_assoc($res_count);
+$total_data = $row_count['total'] ?? 0;
+$total_halaman = ceil($total_data / $limit);
+
+// Query ambil data kartu keluarga dengan LIMIT dan OFFSET
 $query = "SELECT no_kk, 
           GROUP_CONCAT(nama_lengkap SEPARATOR ', ') as daftar_anggota, 
           COUNT(*) as total_orang 
-          FROM jemaat ";
+          FROM jemaat 
+          $where_search
+          GROUP BY no_kk 
+          ORDER BY no_kk ASC 
+          LIMIT $offset, $limit";
 
-if (!empty($search)) {
-    $query .= "WHERE no_kk LIKE '%$search%' OR nama_lengkap LIKE '%$search%' ";
-}
-
-$query .= "GROUP BY no_kk";
 $res_keluarga = mysqli_query($conn, $query);
-
-// KUNCI PERBAIKAN: Buat variabel ini agar tidak Error "Undefined"
-$jumlah_data = mysqli_num_rows($res_keluarga); 
-
-// Hitung total jemaat untuk header
-$total_keluarga = mysqli_num_rows(mysqli_query($conn, "SELECT DISTINCT no_kk FROM jemaat"));
+$jumlah_data = mysqli_num_rows($res_keluarga);
 
 $nama_user = $_SESSION['username'] ?? 'User';
 $waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i');
@@ -192,6 +207,34 @@ $waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i');
                     </div>
             <?php endif; ?>
         </div>
+
+        <!-- TAMPILAN FOOTER PAGINATION -->
+        <div class="table-footer">
+            <div class="show-entries">
+                <span>Tampilkan</span>
+                <select id="entryLimit" onchange="changeLimit(this.value)">
+                    <option value="10" <?= $limit == 10 ? 'selected' : ''; ?>>10</option>
+                    <option value="20" <?= $limit == 20 ? 'selected' : ''; ?>>20</option>
+                    <option value="50" <?= $limit == 50 ? 'selected' : ''; ?>>50</option>
+                </select>
+                <span>data per halaman.</span>
+            </div>
+            <div class="pagination">
+                <span><?= ($total_data > 0 ? $offset + 1 : 0); ?>-<?= min($offset + $limit, $total_data); ?> dari <?= $total_data; ?></span>
+                <div class="pagination-buttons">
+                    <?php if($halaman > 1): ?>
+                        <a href="javascript:void(0)" onclick="loadPageData(<?= $halaman - 1; ?>, <?= $limit; ?>)" class="btn-page">&lt;</a>
+                    <?php endif; ?>
+                    
+                    <button class="btn-page active"><?= $halaman; ?></button>
+                    
+                    <?php if($halaman < $total_halaman): ?>
+                        <a href="javascript:void(0)" onclick="loadPageData(<?= $halaman + 1; ?>, <?= $limit; ?>)" class="btn-page">&gt;</a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
     </div>
         <footer class="main-footer">
             <p>&copy; <?= date('Y'); ?> Church Management System - Versi 3.0</p>

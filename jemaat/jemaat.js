@@ -126,29 +126,25 @@ document.addEventListener('DOMContentLoaded', function() {
 // --- LOGIKA FILTER & PENCARIAN (CLIENT-SIDE) ---
 function combinedFilter() {
     let searchInput = document.getElementById("searchInput").value.toLowerCase();
-    let filterValue = document.getElementById("filterCategory").value;
-    let tr = document.querySelectorAll(".data-table .data-row");
+    let tr = document.querySelectorAll(".data-table tbody .data-row");
     let visibleCount = 0;
 
     tr.forEach(row => {
-        let txtNama = row.children[1].textContent.toLowerCase();
-        let txtPelkat = row.children[4].textContent.trim();
-        let txtSektor = row.children[5].textContent.trim();
-        let txtStatus = row.querySelector(".status-badge").textContent.trim();
-
+        let txtNama = row.children[0].textContent.toLowerCase(); // Kolom nama lengkap
         let matchSearch = txtNama.includes(searchInput);
-        let matchFilter = (filterValue === "all") || 
-            (filterValue === "Aktif" || filterValue === "Non-Aktif" ? txtStatus === filterValue : 
-            (filterValue === "Galatia" || filterValue === "Filipi" || filterValue === "Yudea" ? txtSektor === filterValue : txtPelkat === filterValue));
 
-        if (matchSearch && matchFilter) {
+        if (matchSearch) {
             row.style.display = "";
             visibleCount++;
         } else {
             row.style.display = "none";
         }
     });
-    document.getElementById("noDataRow").style.display = visibleCount === 0 ? "" : "none";
+
+    const noDataRow = document.getElementById("noDataRow");
+    if (noDataRow) {
+        noDataRow.style.display = (visibleCount === 0 && tr.length > 0) ? "" : (tr.length === 0 ? "" : "none");
+    }
 }
 
 // --- LOGIKA MODAL (TAMBAH & EDIT) ---
@@ -215,7 +211,9 @@ if (btnRefresh) {
         const kategoriAktif = document.getElementById("filterCategory").value;
         
         // Buat URL yang menyertakan parameter kategori agar PHP tahu apa yang harus difilter
-        const refreshUrl = `jemaat.php?filter=${encodeURIComponent(kategoriAktif)}`;
+        const limitSelect = document.getElementById('entryLimit');
+        const limitAktif = limitSelect ? limitSelect.value : 10;
+        const refreshUrl = `jemaat.php?halaman=1&limit=${limitAktif}&filter=${encodeURIComponent(kategoriAktif)}`;
 
         icon.style.animation = 'spin 1s linear infinite';
         this.style.opacity = '0.7';
@@ -263,8 +261,14 @@ function toggleDropdown() { document.getElementById('customOptions').classList.t
 function selectOption(val, text) {
     document.getElementById('selectedDisplay').innerText = text;
     document.getElementById('filterCategory').value = val;
-    combinedFilter();
     toggleDropdown();
+
+    // Ambil limit yang sedang dipilih (default 10)
+    const limitSelect = document.getElementById('entryLimit');
+    const limit = limitSelect ? limitSelect.value : 10;
+
+    // Muat ulang data langsung dari server mulai dari halaman 1
+    loadPageData(1, limit);
 }
 
 function toggleModalDropdown(id) {

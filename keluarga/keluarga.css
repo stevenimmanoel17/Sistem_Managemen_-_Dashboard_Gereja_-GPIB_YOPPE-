@@ -1202,3 +1202,79 @@ body.sidebar-closed .top-nav {
         font-size: 12px !important;
     }
 }
+
+/* ========================================= */
+/*   PAGINATION & SHOW ENTRIES KELUARGA      */
+/* ========================================= */
+
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Memastikan semua elemen kiri & kanan berada di satu garis tengah vertikal */
+    margin-top: 25px;
+    padding: 0 10px;
+    width: 100%;
+}
+
+.show-entries {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #555;
+    white-space: nowrap; /* Mencegah teks "data per halaman" patah ke bawah */
+}
+
+.show-entries select {
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    outline: none;
+    cursor: pointer;
+    background-color: #fff;
+    font-size: 13px;
+    height: 32px;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #666;
+    margin: 0 !important; /* Menghilangkan margin dorong dari kode lama */
+    white-space: nowrap;  /* Mencegah teks rentang angka patah ke bawah */
+}
+
+.pagination-buttons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-page {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 13px;
+    text-decoration: none;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-page.active {
+    background: #2392ED;
+    color: white;
+    border-color: #2392ED;
+}
+
+.btn-page:hover:not(.active) {
+    background: #f1f3f5;
+}

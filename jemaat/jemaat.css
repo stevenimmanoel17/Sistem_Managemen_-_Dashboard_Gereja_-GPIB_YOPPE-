@@ -624,52 +624,70 @@ background: white;
     box-shadow: 0 0 8px rgba(35, 146, 237, 0.2);
 }
 
-/* Container footer tabel untuk pagination */
+/* ========================================= */
+/*   PAGINATION & SHOW ENTRIES KELUARGA      */
+/* ========================================= */
+
 .table-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 25px;
     padding: 0 10px;
+    width: 100%;
 }
 
-/* Styling dropdown jumlah data */
 .show-entries {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 14px;
+    gap: 8px;
+    font-size: 13px;
     color: #555;
+    white-space: nowrap;
 }
 
 .show-entries select {
-    padding: 5px 10px;
+    padding: 4px 8px;
     border-radius: 6px;
     border: 1px solid #ddd;
     outline: none;
+    cursor: pointer;
+    background-color: #fff;
+    font-size: 13px;
+    height: 32px;
 }
 
-/* Styling navigasi halaman (Pagination) */
 .pagination {
     display: flex;
     align-items: center;
-    gap: 15px;
-    font-size: 14px;
+    gap: 12px;
+    font-size: 13px;
     color: #666;
+    margin: 0 !important; /* Menghilangkan margin dorong dari kode lama */
+    white-space: nowrap;  /* Mencegah teks rentang angka patah ke bawah */
 }
 
 .pagination-buttons {
     display: flex;
+    align-items: center;
     gap: 5px;
 }
 
 .btn-page {
-    padding: 5px 12px;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 10px;
     border: 1px solid #ddd;
     background: white;
     border-radius: 6px;
     cursor: pointer;
     transition: 0.3s;
+    font-size: 13px;
+    text-decoration: none;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-page.active {
@@ -1216,5 +1234,37 @@ body.sidebar-closed .top-nav {
     .type-box {
         padding: 10px !important;
         font-size: 13px !important;
+    }
+
+    /* Pengaturan Tata Letak Pencarian & Filter di Layar Handphone */
+    .search-grid {
+        display: grid !important;
+        grid-template-columns: 1fr auto !important; /* Baris bawah: Dropdown mengisi sisa ruang, Refresh pas tombol */
+        gap: 12px !important;
+        align-items: flex-end !important;
+    }
+
+    /*  Fitur Pencarian Berdiri Sendiri Memanjang Penuh di Atas */
+    .search-input-group {
+        grid-column: span 2 !important;
+        width: 100% !important;
+    }
+
+    /*  Fitur Filter Kategori di Bawah Kiri */
+    .filter-group {
+        grid-column: 1 !important;
+        width: 100% !important;
+    }
+
+    /*  Tombol Refresh di Bawah Kanan */
+    .refresh-group {
+        grid-column: 2 !important;
+        width: auto !important;
+    }
+
+    .btn-refresh {
+        height: 48px !important; /* Menyamakan tinggi tombol dengan tinggi input box */
+        padding: 0 16px !important;
+        white-space: nowrap !important;
     }
 }

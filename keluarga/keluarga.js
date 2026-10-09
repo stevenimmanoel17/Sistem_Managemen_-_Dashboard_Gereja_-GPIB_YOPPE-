@@ -195,3 +195,36 @@ window.addEventListener('click', function(e) {
         dropdown.classList.remove('show');
     }
 });
+
+// --- FUNGSI PAGINATION DATA KELUARGA ---
+function changeLimit(limitValue) {
+    loadPageData(1, limitValue);
+}
+
+function loadPageData(page, limit) {
+    const contentBody = document.querySelector('.content-body');
+    const searchVal = document.getElementById('searchInput') ? document.getElementById('searchInput').value.trim() : '';
+
+    if (contentBody) contentBody.style.opacity = '0.4';
+
+    const requestUrl = `keluarga.php?halaman=${page}&limit=${limit}&search=${encodeURIComponent(searchVal)}`;
+
+    fetch(requestUrl)
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            const newContent = doc.querySelector('.content-body').innerHTML;
+            const newFooter = doc.querySelector('.table-footer').innerHTML;
+
+            document.querySelector('.content-body').innerHTML = newContent;
+            document.querySelector('.table-footer').innerHTML = newFooter;
+
+            if (contentBody) contentBody.style.opacity = '1';
+        })
+        .catch(error => {
+            console.error('Gagal memuat data keluarga:', error);
+            if (contentBody) contentBody.style.opacity = '1';
+        });
+}
