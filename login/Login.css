@@ -259,3 +259,35 @@ body {
         margin-bottom: 12px;
     }
 }
+
+/* WRAPPER INPUT DENGAN IKON */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper input {
+    padding-right: 44px; /* Ruang agar teks tidak menabrak ikon */
+}
+
+/* POSISI IKON DI TENGAH PINGGIR KANAN */
+.input-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    pointer-events: none; /* Klik tembus ke form input */
+    transition: all 0.25s ease;
+}
+
+.input-icon svg {
+    stroke: #888;
+    transition: stroke 0.25s ease;
+}
+
+/* KETIKA INPUT AKTIF / FOCUS IKON BERUBAH MENJADI BIRU */
+.input-wrapper input:focus + .input-icon svg {
+    stroke: #2392ED;
+}

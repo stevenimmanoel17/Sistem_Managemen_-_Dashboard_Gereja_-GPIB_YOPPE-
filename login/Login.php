@@ -31,10 +31,18 @@ session_start();
                 <div class="title-divider"></div>
                 
                 <form id="loginForm" method="POST">
-                    <div class="input-group">
-                        <label>Username Kamu</label>
+                <div class="input-group">
+                    <label>Username Kamu</label>
+                    <div class="input-wrapper">
                         <input type="text" name="username" placeholder="Masukkan username" required autocomplete="off">
+                        <span class="input-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </span>
                     </div>
+                </div>
 
                     <div class="input-group">
                         <label>Password Kamu</label>
