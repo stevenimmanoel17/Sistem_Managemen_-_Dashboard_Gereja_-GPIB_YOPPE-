@@ -1,186 +1,226 @@
+/* RESET & GENERAL STYLE */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Instrument Sans', sans-serif;
 }
 
 body {
-    background-image: url('../icon/Bluebg.jpg');
-    background-size: cover;             
-    background-position: center;        
-    background-repeat: no-repeat;       
-    background-attachment: fixed;       
+    background-color: #0471CA; /* Background sesuai spesifikasi */
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    margin: 0;
+    padding: 20px;
 }
 
-/* Card Login Modern */
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* KARTU FORM LOGIN (Radius: 18px, Background: #FFFFFF) */
 .login-card {
-    width: 720px;
     background: #FFFFFF;
-    border-radius: 30px;
-    padding: 0;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.30);
-    text-align: center;
-    transition: transform 0.3s ease;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 920px;
+    padding: 24px;
     display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    overflow: hidden;
-    transition: transform 0.3s ease;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: center;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
 }
 
-.login-card:hover {
-    transform: translateY(-5px);
-}
-
-/* Pengaturan Wadah Gambar */
+/* BANNER GAMBAR (Radius: 18px) */
 .login-banner {
     width: 100%;
     height: 100%;
-    background-color: transparent;
-    border: none !important;
-    outline: none !important;
+    min-height: 420px;
+    border-radius: 18px;
+    overflow: hidden;
 }
 
 .login-banner img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
     display: block;
-    border: none !important;
+    border-radius: 18px;
 }
 
+/* SISI FORM LOGIN */
 .sign-in-section {
-    padding: 45px 35px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 10px 15px;
 }
 
-/* Branding Gereja */
-.sign-in-section h1 {
-    font-weight: 800;
+/* TYPOGRAPHY */
+/* Title = Instrument Sans / Bold / 40px (dioptimalkan agar proporsional di laptop) / #000000 */
+.login-title {
     font-size: 38px;
-    color: #2392ED;
-    letter-spacing: -0.5px;
-    margin-bottom: 1px;
-    text-transform: uppercase;
+    font-weight: 700;
+    color: #000000;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
 }
 
-.sign-in-section p {
-    color: #888;
-    font-size: 14px;
-    margin-bottom: 35px;
+/* Sub-Title = Instrument Sans / Medium / 16px / #888888 */
+.login-subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: #888888;
+    line-height: 1.4;
+    margin-bottom: 20px;
 }
 
-/* Form Styling */
+.title-divider {
+    width: 100%;
+    height: 1px;
+    background-color: #EAEAEA;
+    margin-bottom: 24px;
+}
+
+/* FORM INPUT (Content = Instrument Sans / Medium / 15px / #000000, Radius = 8px) */
 .input-group {
-    margin-bottom: 22px;
+    margin-bottom: 18px;
     text-align: left;
 }
 
 .input-group label {
     display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: #444;
-    margin-bottom: 8px;
-    margin-left: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #888888;
+    margin-bottom: 6px;
 }
 
 .input-group input {
     width: 100%;
-    height: 52px;
-    background: #F1F3F5;
-    border: 2px solid transparent; /* Border transparan agar halus saat focus */
-    border-radius: 15px;
-    padding: 0 20px;
+    height: 46px;
+    background: #FFFFFF;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px; /* Stroke form radius: 8px */
+    padding: 0 14px;
     font-size: 15px;
-    color: #333;
+    font-weight: 500;
+    color: #000000;
     outline: none;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
+.input-group input::placeholder {
+    color: #B0B0B0;
+    font-weight: 400;
+}
+
+/* ACTIVE / FOCUS INPUT STROKE: #2392ED */
 .input-group input:focus {
-    background: #FFF;
     border-color: #2392ED;
-    box-shadow: 0 8px 20px rgba(35, 146, 237, 0.1);
+    box-shadow: 0 0 0 3px rgba(35, 146, 237, 0.15);
 }
 
-/* Password Toggle Wrapper */
+/* PASSWORD WRAPPER & TOGGLE */
 .password-wrapper {
     position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 44px;
 }
 
 .toggle-password {
     position: absolute;
-    right: 18px;
+    right: 12px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
     display: flex;
-    opacity: 0.6;
-    transition: 0.3s;
+    align-items: center;
+    opacity: 0.7;
+    transition: opacity 0.2s;
 }
 
 .toggle-password:hover {
     opacity: 1;
 }
 
-/* Link Lupa Password */
-.forgot-password {
-    display: block;
-    text-align: right;
-    color: #888;
-    text-decoration: none;
+/* TOMBOL LOGIN (Background: #2392ED, Radius: 8px) */
+.btn-signin {
+    width: 100%;
+    height: 48px;
+    background-color: #2392ED;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px; /* Radius: 8px */
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    transition: background-color 0.25s ease, transform 0.1s ease;
+}
+
+.btn-signin:hover {
+    background-color: #1A7ACD;
+}
+
+.btn-signin:active {
+    transform: scale(0.99);
+}
+
+/* BARIS BAWAH: INGATKAN SAYA & LUPA PASSWORD */
+.form-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 13px;
     font-weight: 500;
-    margin-top: -10px;
-    margin-bottom: 25px;
-    transition: color 0.3s ease;
+    color: #888888;
+}
+
+.remember-me-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.remember-me-group input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #2392ED;
+    border-radius: 4px;
+}
+
+.forgot-password {
+    color: #888888;
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .forgot-password:hover {
     color: #2392ED;
-    text-decoration: none;
+    text-decoration: underline;
 }
 
-/* Tombol Login */
-.btn-signin {
-    width: 100%;
-    height: 55px;
-    background: #2392ED;
-    color: #FFF;
-    border: none;
-    border-radius: 15px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 10px 25px rgba(35, 146, 237, 0.3);
-    transition: all 0.3s ease;
-}
-
-.btn-signin:hover {
-    background: #1A76C2;
-    transform: scale(1.02); /* Sedikit membesar saat di-hover */
-    box-shadow: 0 12px 30px rgba(35, 146, 237, 0.4);
-}
-
-.btn-signin:active {
-    transform: scale(0.98);
-}
-
-/* Loader */
+/* LOADER TOMBOL */
 .loader {
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
     border-radius: 50%;
-    border-top-color: #fff;
+    border-top-color: #FFFFFF;
     animation: spin 0.8s linear infinite;
 }
 
@@ -188,71 +228,34 @@ body {
     to { transform: rotate(360deg); }
 }
 
-.remember-me-group {
-    user-select: none;
-    transition: 0.3s;
-}
-
-.remember-me-group:hover label {
-    color: #2392ED;
-}
-
-.remember-me-group input[type="checkbox"] {
-    accent-color: #2392ED;
-}
-
 .swal2-timer-progress-bar {
     background: #2ecc71 !important;
 }
 
-@media (max-width: 768px) {
-    /* Mengubah container luar agar fleksibel mengikuti layar HP */
-    body {
-        padding: 20px 15px !important;
-    }
-
-    /* Mengubah susunan 2 kolom horizontal menjadi bertumpuk vertikal */
+/* RESPONSIVE LAYAR TABLET & HANDPHONE */
+@media (max-width: 820px) {
     .login-card {
-        width: 100% !important;
-        max-width: 420px !important; /* Batas lebar ideal boks login di HP */
-        grid-template-columns: 1fr !important; /* Menjadi 1 kolom penuh */
-        border-radius: 25px !important;
+        grid-template-columns: 1fr;
+        max-width: 440px;
+        padding: 20px;
+        gap: 20px;
     }
 
-    /* Mengatur tinggi spanduk gambar gereja di bagian atas */
     .login-banner {
-        height: 200px !important; /* Membatasi tinggi gambar agar tidak terlalu panjang */
+        min-height: 200px;
+        height: 200px;
     }
 
-    .login-banner img {
-        border-radius: 25px 25px 0 0 !important; /* Sudut melengkung hanya di atas */
-    }
-
-    /* Menyesuaikan ruang padding dalam form input */
     .sign-in-section {
-        padding: 30px 20px !important; /* Membuat padding lebih rapat */
+        padding: 5px 0;
     }
 
-    /* Mengecilkan ukuran tipografi teks judul boks */
-    .sign-in-section h1 {
-        font-size: 28px !important; /* Menurunkan dari 38px agar tidak meluber */
-        text-align: center;
+    .login-title {
+        font-size: 30px;
     }
 
-    .sign-in-section p {
-        font-size: 13px !important;
-        margin-bottom: 25px !important;
-        text-align: center;
-    }
-
-    /* Menyesuaikan elemen tombol dan kotak input */
-    .input-group input {
-        height: 48px !important; /* Sedikit memperkecil tinggi input di HP */
-        font-size: 14px !important;
-    }
-
-    .btn-signin {
-        height: 50px !important;
-        font-size: 15px !important;
+    .login-subtitle {
+        font-size: 14px;
+        margin-bottom: 12px;
     }
 }

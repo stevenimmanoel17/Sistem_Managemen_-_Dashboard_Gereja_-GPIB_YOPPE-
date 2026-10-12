@@ -869,3 +869,95 @@ body.sidebar-closed .top-nav {
         font-size: 13px !important;
     }
 }
+
+/* ========================================================= */
+/*   STYLING 4 GRAFIK DASHBOARD MODERN & FILTER INTERAKTIF   */
+/* ========================================================= */
+
+.charts-row-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 35px;
+    margin-bottom: -20px;
+    padding: 0 20px;
+}
+
+.charts-row-title span {
+    font-size: 24px;
+    color: #2392ED;
+}
+
+.charts-row-title h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.chart-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.chart-title-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chart-title-box h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+.icon-blue { color: #2392ED; }
+.icon-green { color: #2ecc71; }
+.icon-purple { color: #9B51E0; }
+.icon-orange { color: #F2994A; }
+
+/* Filter Dropdown Kecil di Header Grafik */
+.chart-filter-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chart-filter-box label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+}
+
+.chart-filter-box select {
+    padding: 5px 12px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    background-color: #f8f9fa;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    transition: 0.2s;
+}
+
+.chart-filter-box select:hover,
+.chart-filter-box select:focus {
+    border-color: #2392ED;
+    background-color: #fff;
+}
+
+.badge-info-year {
+    background-color: #e3f2fd;
+    color: #2392ED;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
