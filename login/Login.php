@@ -1,10 +1,16 @@
 <?php
+// ==========================================
+// INISIALISASI SESI
+// ==========================================
 session_start();
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <!-- ========================================== -->
+    <!-- METADATA & ASSET HEADER                   -->
+    <!-- ========================================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log in</title>
@@ -17,6 +23,9 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+    <!-- ========================================== -->
+    <!-- KONTEN UTAMA HALAMAN LOGIN                -->
+    <!-- ========================================== -->
     <div class="container">
         <div class="login-card">
             <!-- Sisi Kiri: Gambar Gereja dengan Radius 18px -->
@@ -26,23 +35,25 @@ session_start();
 
             <!-- Sisi Kanan: Form Login -->
             <div class="sign-in-section">
+                <!-- Header Branding Form -->
                 <h1 class="login-title">GPIB YOPPE</h1>
                 <p class="login-subtitle">Selamat Datang di Dashboard Sistem Manajemen</p>
                 <div class="title-divider"></div>
                 
+                <!-- Form Input Kredensial -->
                 <form id="loginForm" method="POST">
-                <div class="input-group">
-                    <label>Username Kamu</label>
-                    <div class="input-wrapper">
-                        <input type="text" name="username" placeholder="Masukkan username" required autocomplete="off">
-                        <span class="input-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </span>
+                    <div class="input-group">
+                        <label>Username Kamu</label>
+                        <div class="input-wrapper">
+                            <input type="text" name="username" placeholder="Masukkan username" required autocomplete="off">
+                            <span class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </span>
+                        </div>
                     </div>
-                </div>
 
                     <div class="input-group">
                         <label>Password Kamu</label>
@@ -78,6 +89,9 @@ session_start();
         </div>
     </div>
 
+    <!-- ========================================== -->
+    <!-- SKRIP LOGIKA INTERAKSI                    -->
+    <!-- ========================================== -->
     <script src="login.js"></script>
 </body>
 </html>

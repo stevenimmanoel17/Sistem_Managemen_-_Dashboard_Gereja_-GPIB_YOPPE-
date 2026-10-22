@@ -1,4 +1,6 @@
-/* RESET & GENERAL STYLE */
+/* ==========================================
+   RESET & LAYOUT UTAMA HALAMAN
+   ========================================== */
 * {
     margin: 0;
     padding: 0;
@@ -22,6 +24,9 @@ body {
     align-items: center;
 }
 
+/* ==========================================
+   KOMPONEN KARTU & STRUKTUR GRID LOGIN
+   ========================================== */
 /* KARTU FORM LOGIN (Radius: 18px, Background: #FFFFFF) */
 .login-card {
     background: #FFFFFF;
@@ -61,7 +66,9 @@ body {
     padding: 10px 15px;
 }
 
-/* TYPOGRAPHY */
+/* ==========================================
+   TIPOGRAFI & HEADER FORM
+   ========================================== */
 /* Title = Instrument Sans / Bold / 40px (dioptimalkan agar proporsional di laptop) / #000000 */
 .login-title {
     font-size: 38px;
@@ -88,6 +95,9 @@ body {
     margin-bottom: 24px;
 }
 
+/* ==========================================
+   ELEMEN INPUT FORM & IKON
+   ========================================== */
 /* FORM INPUT (Content = Instrument Sans / Medium / 15px / #000000, Radius = 8px) */
 .input-group {
     margin-bottom: 18px;
@@ -127,6 +137,38 @@ body {
     box-shadow: 0 0 0 3px rgba(35, 146, 237, 0.15);
 }
 
+/* WRAPPER INPUT DENGAN IKON */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper input {
+    padding-right: 44px; /* Ruang agar teks tidak menabrak ikon */
+}
+
+/* POSISI IKON DI TENGAH PINGGIR KANAN */
+.input-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    pointer-events: none; /* Klik tembus ke form input */
+    transition: all 0.25s ease;
+}
+
+.input-icon svg {
+    stroke: #888;
+    transition: stroke 0.25s ease;
+}
+
+/* KETIKA INPUT AKTIF / FOCUS IKON BERUBAH MENJADI BIRU */
+.input-wrapper input:focus + .input-icon svg {
+    stroke: #2392ED;
+}
+
 /* PASSWORD WRAPPER & TOGGLE */
 .password-wrapper {
     position: relative;
@@ -153,6 +195,9 @@ body {
     opacity: 1;
 }
 
+/* ==========================================
+   TOMBOL AKSI & NAVIGASI BAWAH
+   ========================================== */
 /* TOMBOL LOGIN (Background: #2392ED, Radius: 8px) */
 .btn-signin {
     width: 100%;
@@ -214,6 +259,9 @@ body {
     text-decoration: underline;
 }
 
+/* ==========================================
+   FEEDBACK VISUAL & INDIKATOR LOADER
+   ========================================== */
 /* LOADER TOMBOL */
 .loader {
     width: 18px;
@@ -232,6 +280,9 @@ body {
     background: #2ecc71 !important;
 }
 
+/* ==========================================
+   MEDIA QUERY & RESPONSIVE DESIGN
+   ========================================== */
 /* RESPONSIVE LAYAR TABLET & HANDPHONE */
 @media (max-width: 820px) {
     .login-card {
@@ -258,36 +309,4 @@ body {
         font-size: 14px;
         margin-bottom: 12px;
     }
-}
-
-/* WRAPPER INPUT DENGAN IKON */
-.input-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-.input-wrapper input {
-    padding-right: 44px; /* Ruang agar teks tidak menabrak ikon */
-}
-
-/* POSISI IKON DI TENGAH PINGGIR KANAN */
-.input-icon {
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    pointer-events: none; /* Klik tembus ke form input */
-    transition: all 0.25s ease;
-}
-
-.input-icon svg {
-    stroke: #888;
-    transition: stroke 0.25s ease;
-}
-
-/* KETIKA INPUT AKTIF / FOCUS IKON BERUBAH MENJADI BIRU */
-.input-wrapper input:focus + .input-icon svg {
-    stroke: #2392ED;
 }

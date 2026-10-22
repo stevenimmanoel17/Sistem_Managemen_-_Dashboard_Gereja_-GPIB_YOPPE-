@@ -1,7 +1,13 @@
 <?php
+// ==========================================
+// SESI & KONEKSI DATABASE
+// ==========================================
 session_start();
 include '../koneksi.php';
 
+// ==========================================
+// PENGOLAHAN PERMINTAAN POST & VALIDASI LOGIN
+// ==========================================
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Bersihkan input
     $username = mysqli_real_escape_string($conn, trim($_POST['username']));
