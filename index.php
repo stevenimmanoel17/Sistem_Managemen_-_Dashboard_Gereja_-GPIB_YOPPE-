@@ -1,4 +1,7 @@
 <?php
+// ==========================================
+// MODUL SESI & OTENTIKASI PENGGUNA
+// ==========================================
 session_start();
 $conn = mysqli_connect("localhost", "root", "", "db_gpib");
 
@@ -7,14 +10,24 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
     exit;
 }
 
-// Profil Gereja
+$nama_user = $_SESSION['username'] ?? 'User';
+$waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i');
+
+// ==========================================
+// MODUL DATA PROFIL & STRUKTUR ORGANISASI
+// ==========================================
 $query_profil = mysqli_query($conn, "SELECT * FROM profil_gereja LIMIT 1");
 $profil = mysqli_fetch_assoc($query_profil);
 $nama_gereja   = $profil['nama_gereja'] ?? "GPIB 'Yoppe' Belawan";
 $alamat_gereja = $profil['alamat'] ?? "Jl. Veteran No. 123, Belawan";
 $logo_gereja   = $profil['logo'] ?? "icon/GPIB-NoCapt.png";
 
-// Kartu Statistik Atas
+$query_struktur = mysqli_query($conn, "SELECT * FROM struktur_organisasi LIMIT 1");
+$st = mysqli_fetch_assoc($query_struktur);
+
+// ==========================================
+// MODUL STATISTIK RINGKASAN & ULANG TAHUN
+// ==========================================
 $total_jemaat = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM jemaat"));
 $total_kk = mysqli_num_rows(mysqli_query($conn, "SELECT DISTINCT no_kk FROM jemaat WHERE no_kk IS NOT NULL AND no_kk != ''"));
 
@@ -29,13 +42,9 @@ $total_masuk = mysqli_fetch_assoc(mysqli_query($conn, "SELECT SUM(nominal) as to
 $total_keluar = mysqli_fetch_assoc(mysqli_query($conn, "SELECT SUM(nominal) as total FROM keuangan WHERE tipe = 'pengeluaran'"))['total'] ?? 0;
 $saldo_akhir = $total_masuk - $total_keluar;
 
-$query_struktur = mysqli_query($conn, "SELECT * FROM struktur_organisasi LIMIT 1");
-$st = mysqli_fetch_assoc($query_struktur);
-
-$nama_user = $_SESSION['username'] ?? 'User';
-$waktu_masuk_sistem = $_SESSION['waktu_login'] ?? date('d/m/Y H:i');
-
-// --- PENGAMBILAN DATA UNTUK GRAFIK KEUANGAN (BERDASARKAN TAHUN) ---
+// ==========================================
+// MODUL DATA ANALISIS KEUANGAN UNTUK GRAFIK
+// ==========================================
 $tahun_sekarang = date('Y');
 $list_tahun_query = mysqli_query($conn, "SELECT DISTINCT YEAR(tanggal) as thn FROM keuangan ORDER BY thn DESC");
 $available_years = [];
@@ -69,10 +78,11 @@ foreach ($available_years as $thn) {
     ];
 }
 
-// --- PENGAMBILAN DATA JEMAAT PER SEKTOR (GALATIA, FILIPI, YUDEA) ---
+// ==========================================
+// MODUL DATA DEMOGRAFI SEKTOR UNTUK GRAFIK
+// ==========================================
 $sektor_list = ['Galatia', 'Filipi', 'Yudea'];
 
-// 1. Data per kategori (Semua, Aktif, Pelkat PA, PT, GP, PKP, PKB, PKLU)
 $kategori_sektor = [];
 $daftar_kategori = ['Semua', 'Aktif', 'PA', 'PT', 'GP', 'PKP', 'PKB', 'PKLU'];
 foreach ($daftar_kategori as $kat) {
@@ -89,7 +99,6 @@ foreach ($daftar_kategori as $kat) {
     }
 }
 
-// 2. Data Jiwa vs KK per Sektor
 $jiwa_per_sektor = [];
 $kk_per_sektor = [];
 foreach ($sektor_list as $sek) {
@@ -101,6 +110,9 @@ foreach ($sektor_list as $sek) {
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <!-- ========================================== -->
+    <!-- METADATA & ASSET RESOURCE HEADERS         -->
+    <!-- ========================================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
@@ -111,6 +123,9 @@ foreach ($sektor_list as $sek) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <!-- ========================================== -->
+    <!-- KOMPONEN LOADER                           -->
+    <!-- ========================================== -->
     <div id="loading-screen">
         <div class="loader-content">
             <img src="icon/GPIB-NoCapt.png" alt="Logo" class="loader-logo">
@@ -121,6 +136,9 @@ foreach ($sektor_list as $sek) {
         </div>
     </div> 
 
+    <!-- ========================================== -->
+    <!-- KOMPONEN SIDEBAR & NAVIGASI UTAMA         -->
+    <!-- ========================================== -->
     <div class="sidebar">
         <div class="brand">
             <img src="icon/Chruch.png" alt="Logo" class="logo">
@@ -143,7 +161,13 @@ foreach ($sektor_list as $sek) {
         </div>
     </div>
 
+    <!-- ========================================== -->
+    <!-- AREA KONTEN UTAMA                         -->
+    <!-- ========================================== -->
     <div class="main-content">
+        <!-- ========================================== -->
+        <!-- HEADER NAVIGASI ATAS & PROFIL USER        -->
+        <!-- ========================================== -->
         <header class="top-nav">
             <div class="nav-left">
                 <button id="sidebarToggle" class="btn-toggle">
@@ -195,7 +219,11 @@ foreach ($sektor_list as $sek) {
             </div>
         </header>
 
+        <!-- ========================================== -->
+        <!-- BADAN DASHBOARD                           -->
+        <!-- ========================================== -->
         <div class="dashboard-body">    
+            <!-- Banner Sambutan & Identitas Gereja -->
             <header class="welcome-header">
                 <h2>Selamat Datang, <span><?= htmlspecialchars($nama_user); ?>!</span></h2>
                 <p>Senang melihatmu kembali di Dashboard Gereja GPIB Yoppe.</p>
@@ -213,6 +241,7 @@ foreach ($sektor_list as $sek) {
                 </div>
             </div>
 
+            <!-- Kartu Metrik / Statistik Ringkas -->
             <div class="dashboard-stats">
                 <div class="stat-card">
                     <div class="stat-info">
@@ -240,15 +269,12 @@ foreach ($sektor_list as $sek) {
                 </div>
             </div>
 
-            <!-- ========================================== -->
-            <!-- BARIS PERTAMA: GRAFIK KEUANGAN            -->
-            <!-- ========================================== -->
+            <!-- Visualisasi Analisis & Tren Keuangan -->
             <div class="charts-row-title">
                 <span class="material-symbols-outlined">payments</span>
                 <h3>Analisis & Tren Keuangan</h3>
             </div>
             <div class="charts-grid-container">
-                <!-- Grafik 1: Perbandingan Tren Arus Kas Bulanan -->
                 <div class="chart-card-wrapper">
                     <div class="chart-header-flex">
                         <div class="chart-title-box">
@@ -269,7 +295,6 @@ foreach ($sektor_list as $sek) {
                     </div>
                 </div>
                 
-                <!-- Grafik 2: Tren Saldo Bersih / Surplus-Defisit Kumulatif -->
                 <div class="chart-card-wrapper">
                     <div class="chart-header-flex">
                         <div class="chart-title-box">
@@ -284,15 +309,12 @@ foreach ($sektor_list as $sek) {
                 </div>
             </div>
 
-            <!-- ========================================== -->
-            <!-- BARIS KEDUA: GRAFIK JUMLAH JEMAAT          -->
-            <!-- ========================================== -->
+            <!-- Visualisasi Distribusi & Demografi Jemaat -->
             <div class="charts-row-title" style="margin-top: 40px;">
                 <span class="material-symbols-outlined">groups</span>
                 <h3>Distribusi & Demografi Jemaat</h3>
             </div>
             <div class="charts-grid-container">
-                <!-- Grafik 3: Distribusi Persentase Wilayah Sektor -->
                 <div class="chart-card-wrapper">
                     <div class="chart-header-flex">
                         <div class="chart-title-box">
@@ -318,7 +340,6 @@ foreach ($sektor_list as $sek) {
                     </div>
                 </div>
                 
-                <!-- Grafik 4: Perbandingan Total Jiwa vs Kepala Keluarga -->
                 <div class="chart-card-wrapper">
                     <div class="chart-header-flex">
                         <div class="chart-title-box">
@@ -332,6 +353,7 @@ foreach ($sektor_list as $sek) {
                 </div>
             </div>
 
+            <!-- Bagian Kepengurusan & Ulang Tahun -->
             <div class="info-grid">
                 <div class="org-section">
                     <div class="section-title">
@@ -376,15 +398,20 @@ foreach ($sektor_list as $sek) {
             </div>
         </div>
         
+        <!-- ========================================== -->
+        <!-- FOOTER HALAMAN                            -->
+        <!-- ========================================== -->
         <footer class="main-footer">
             <p>&copy; 2026 Church Management System - Versi 3.0</p>
         </footer>
     </div>
 
+    <!-- ========================================== -->
+    <!-- SCRIPT EKSTERNAL & DATA BRIDGE             -->
+    <!-- ========================================== -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="index.js"></script>
 
-    <!-- DATA BRIDGE JSON (PHP ke JavaScript) -->
     <script>
         window.DASHBOARD_DATA = {
             tahunAktif: "<?= $tahun_sekarang; ?>",

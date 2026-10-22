@@ -1,10 +1,14 @@
 <?php
+// ==========================================
+// INISIALISASI SESSION
+// ==========================================
 session_start(); 
 
-// Hapus semua variabel session
+// ==========================================
+// PEMBERSIHAN DATA SESSION & COOKIE
+// ==========================================
 $_SESSION = array();
 
-// Hancurkan cookie session jika ada di browser
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
     setcookie(session_name(), '', time() - 42000,
@@ -15,6 +19,9 @@ if (ini_get("session.use_cookies")) {
 
 session_destroy();
 
+// ==========================================
+// REDIREKSI NAVIGASI
+// ==========================================
 header("Location: login/Login.php");
 exit;
 ?>

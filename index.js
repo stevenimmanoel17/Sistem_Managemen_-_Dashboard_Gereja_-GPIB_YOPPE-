@@ -1,6 +1,37 @@
+// =========================================================================
+// DEKLARASI VARIABEL GLOBAL & FUNGSI BANTU FORMAT
+// =========================================================================
+
+let chartArusKas = null;
+let chartSurplus = null;
+let chartDistribusiSektor = null;
+let chartJiwaKk = null;
+
+const labelBulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+
+function formatRupiah(val) {
+    return 'Rp ' + Number(val).toLocaleString('id-ID');
+}
+
+function hitungSurplusKumulatif(inArr, outArr) {
+    let kumulatif = [];
+    let berjalan = 0;
+    for (let i = 0; i < 12; i++) {
+        let selisih = (inArr[i] || 0) - (outArr[i] || 0);
+        berjalan += selisih;
+        kumulatif.push(berjalan);
+    }
+    return kumulatif;
+}
+
+
+// =========================================================================
+// EVENT LISTENER UTAMA KETIKA DOM SIAP DIJALANKAN
+// =========================================================================
+
 document.addEventListener('DOMContentLoaded', function() {
     
-    // --- LOGIKA SIDEBAR & RESIZE GRAFIK ---
+    // --- KOMPONEN PENGATUR SIDEBAR & RESPONSIF GRAFIK ---
     const btnToggle = document.getElementById('sidebarToggle');
     if (btnToggle) {
         btnToggle.addEventListener('click', function() {
@@ -19,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('sidebar-closed');
     }
 
-    // --- LOGIKA LOGOUT DENGAN SWEETALERT2 ---
+    // --- KOMPONEN KONFIRMASI LOGOUT DENGAN SWEETALERT2 ---
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function(e) {
@@ -54,21 +85,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- INISIALISASI KE-4 GRAFIK DASHBOARD ---
+    // --- PEMANGGILAN INISIALISASI SELURUH GRAFIK ---
     initAllCharts();
 });
 
-// Variabel Global Instance Chart
-let chartArusKas = null;
-let chartSurplus = null;
-let chartDistribusiSektor = null;
-let chartJiwaKk = null;
 
-const labelBulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-
-function formatRupiah(val) {
-    return 'Rp ' + Number(val).toLocaleString('id-ID');
-}
+// =========================================================================
+// KOMPONEN PEMBUATAN GRAFIK CHART.JS (DASHBOARD)
+// =========================================================================
 
 function initAllCharts() {
     const dataObj = window.DASHBOARD_DATA;
@@ -77,9 +101,7 @@ function initAllCharts() {
     let tahun = dataObj.tahunAktif;
     let dataKeuanganThn = dataObj.keuangan[tahun] || { in: Array(12).fill(0), out: Array(12).fill(0) };
 
-    // =========================================================================
-    // 1. GRAFIK TREN ARUS KAS BULANAN (GROUPED BAR CHART)
-    // =========================================================================
+    // --- GRAFIK TREN ARUS KAS BULANAN (GROUPED BAR CHART) ---
     const ctxArusKas = document.getElementById('arusKasChart');
     if (ctxArusKas) {
         chartArusKas = new Chart(ctxArusKas.getContext('2d'), {
@@ -139,9 +161,7 @@ function initAllCharts() {
         });
     }
 
-    // =========================================================================
-    // 2. GRAFIK TREN SALDO BERSIH / SURPLUS-DEFISIT (AREA CHART DENGAN BASELINE 0)
-    // =========================================================================
+    // --- GRAFIK TREN SALDO BERSIH ATAU SURPLUS-DEFISIT (AREA CHART) ---
     const ctxSurplus = document.getElementById('surplusDefisitChart');
     if (ctxSurplus) {
         let netData = hitungSurplusKumulatif(dataKeuanganThn.in, dataKeuanganThn.out);
@@ -205,9 +225,7 @@ function initAllCharts() {
         });
     }
 
-    // =========================================================================
-    // 3. GRAFIK DISTRIBUSI PERSENTASE WILAYAH SEKTOR (DONUT CHART)
-    // =========================================================================
+    // --- GRAFIK DISTRIBUSI PERSENTASE WILAYAH SEKTOR (DONUT CHART) ---
     const ctxDistribusi = document.getElementById('distribusiSektorChart');
     if (ctxDistribusi) {
         const rawSektor = dataObj.kategoriSektor['Semua'];
@@ -256,9 +274,7 @@ function initAllCharts() {
         });
     }
 
-    // =========================================================================
-    // 4. GRAFIK PERBANDINGAN TOTAL JIWA VS KEPALA KELUARGA (CLUSTERED COLUMN)
-    // =========================================================================
+    // --- GRAFIK PERBANDINGAN TOTAL JIWA VS KEPALA KELUARGA (CLUSTERED COLUMN CHART) ---
     const ctxJiwaKk = document.getElementById('jiwaVsKkChart');
     if (ctxJiwaKk) {
         chartJiwaKk = new Chart(ctxJiwaKk.getContext('2d'), {
@@ -316,19 +332,11 @@ function initAllCharts() {
     }
 }
 
-// Fungsi Hitung Kumulatif Surplus (Net Bulanan Kumulatif)
-function hitungSurplusKumulatif(inArr, outArr) {
-    let kumulatif = [];
-    let berjalan = 0;
-    for (let i = 0; i < 12; i++) {
-        let selisih = (inArr[i] || 0) - (outArr[i] || 0);
-        berjalan += selisih;
-        kumulatif.push(berjalan);
-    }
-    return kumulatif;
-}
 
-// --- FILTER INTERAKTIF 1: TAHUN KEUANGAN ---
+// =========================================================================
+// KOMPONEN PEMBARUAN DATA GRAFIK (FILTER INTERAKTIF)
+// =========================================================================
+
 function gantiTahunKeuangan(thn) {
     const dataObj = window.DASHBOARD_DATA;
     if (!dataObj || !dataObj.keuangan[thn]) return;
@@ -353,7 +361,6 @@ function gantiTahunKeuangan(thn) {
     if (lbl) lbl.innerText = thn;
 }
 
-// --- FILTER INTERAKTIF 2: KATEGORI SEKTOR ---
 function gantiKategoriSektor(kat) {
     const dataObj = window.DASHBOARD_DATA;
     if (!dataObj || !dataObj.kategoriSektor[kat]) return;
@@ -367,13 +374,31 @@ function gantiKategoriSektor(kat) {
     }
 }
 
-// --- LOGIKA LOADING SCREEN & USER PROFILE DROPDOWN ---
+
+// =========================================================================
+// KOMPONEN LOADING SCREEN & AUTO-SCROLL SIDEBAR
+// =========================================================================
+
 window.addEventListener('load', function() {
     const loader = document.getElementById('loading-screen');
     if (loader) {
-        setTimeout(() => { loader.classList.add('loader-hidden'); }, 400); 
+        setTimeout(() => {
+            loader.classList.add('loader-hidden');
+        }, 500); 
+    }
+
+    const activeLink = document.querySelector('.nav-menu .nav-link.active'); 
+    const sidebarMenu = document.querySelector('.nav-menu');
+
+    if (activeLink && sidebarMenu) {
+        sidebarMenu.scrollTop = activeLink.offsetTop - (sidebarMenu.clientHeight / 1) + (activeLink.clientHeight / 1);
     }
 });
+
+
+// =========================================================================
+// KOMPONEN MODAL & KARTU INFORMASI PROFIL PENGGUNA
+// =========================================================================
 
 function toggleUserCard(event) {
     event.stopPropagation();

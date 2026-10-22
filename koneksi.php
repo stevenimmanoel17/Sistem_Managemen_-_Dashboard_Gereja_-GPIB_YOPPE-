@@ -1,9 +1,15 @@
 <?php
+// ==========================================
+// KONFIGURASI PARAMETER KONEKSI DATABASE
+// ==========================================
 $host = "localhost";
 $user = "root";
 $pass = "";
 $db   = "db_gpib";
 
+// ==========================================
+// INISIALISASI & VALIDASI KONEKSI DATABASE
+// ==========================================
 $conn = mysqli_connect($host, $user, $pass, $db);
 
 if (!$conn) {
