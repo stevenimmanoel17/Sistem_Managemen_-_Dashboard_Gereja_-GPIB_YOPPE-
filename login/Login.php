@@ -13,7 +13,7 @@ session_start();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Login.css?v=<?= time(); ?>">
+    <link rel="stylesheet" href="login.css?v=<?= time(); ?>">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -71,7 +71,7 @@ session_start();
                             <input type="checkbox" id="rememberMe">
                             <span>Ingatkan Saya!</span>
                         </label>
-                        <a href="../Lupa_Password/Lupa_password.html" class="forgot-password">Lupa Password?</a>
+                        <a href="../lupa_password/lupa_password.html" class="forgot-password">Lupa Password?</a>
                     </div>
                 </form>
             </div>
